@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <head>
+        <meta charset="utf-8">
+        <title>E-class</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<!--
+        Freshness Template
+		http://www.templatemo.com/preview/templatemo_422_freshness
+        -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+        <link rel="stylesheet" href="css/templatemo-style.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+
+        <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script type="text/javascript">
+         var count = 0;
+         //var ansArray= new Array();
+    function questionType(){
+       // document.getElementById("page").innerHTML==" ";
+        var ans=document.getElementById("selectedValue").value;
+        if(ans=="paragraph"){
+           $('page').html('');
+            document.getElementById("questionType").innerHTML='<div class=" from-group"><input type="text"  name="question" placeholder="answer" class="form-control" ></input><br/><input type="submit" class="form-control" value="submit" onclick="question()"></div>';
+
+        }
+        if(ans=="multiple"){
+                //var num=1;
+                document.getElementById("questionType").innerHTML='<div class=" form-group"><input type="text"  name="answer" placeholder="answer" class="form-control" id="'+count+'"></input></div>';
+                document.getElementById("extraInput").innerHTML='<div class=" form-group"><input type="button"name="answer" value="click to addd more" onclick="addTextField()" class="form-control" ></input></div>';
+                document.getElementById('addInput').innerHTML='<input type="submit" class="form-control" value="submit" onclick="insertIntoDatabase()">';
+
+          }
+          if (ans=="checkbox"){
+            document.getElementById("questionType").innerHTML='<div class=" form-group"><input type="text"  name="answer" placeholder="answer" class="form-control" id="'+count+'"></input></div>';
+            document.getElementById("extraInput").innerHTML='<div class=" form-group"><input type="button"name="answer" value="click to addd more" onclick="addTextField()" class="form-control" ></input></div>';
+            document.getElementById('addInput').innerHTML='<input type="submit" class="form-control" value="submit" onclick="insertIntoDatabase()">';
+           }
+       }
+      
+       function addTextField(){
+                count++;
+                var add =document.getElementById("questionType");
+             add.innerHTML=add.innerHTML+'<div class=" form-group"><input type="text" id="'+count+'" name="name" placeholder="answer" class="form-control"></input>';
+             
+ 
+          }
+          function sendRequest(u){
+                
+                var obj=$.ajax({url:u,async:false});
+                
+                var result=$.parseJSON(obj.responseText);
+                
+                return result;    
+            }
+          function insertIntoDatabase(){
+            //var ansArray =new Array();
+            var ans2="";
+            for (i=0; i<=count; i++){
+              //alert(count);
+            var ans =document.getElementById(i).value;
+            //ansArray.push(ans);
+            if (i==0) {
+             ans2=ans; 
+            }
+            else{
+            ans2=ans2+","+ans;
+          }
+          }
+            var url="controller.php?cmd=8&QnA="+ans2;
+            //prompt("u",url);
+            var result=sendRequest(url);
+         
+            //prompt("u",url);
+            var question=$("#question").val;
+            var url="controller.php?cmd=7&question="+question;
+            //prompt("u",url);
+            var result=sendRequest(url);
+
+          }
+          function question(){
+            var question=$("#question").val;
+            var url="controller.php?cmd=7&question="+question;
+            prompt("u",url);
+            var result=sendRequest(url);
+          }
+         
+         
+          </script>
+        
+    </head>
+    <body onload="questionType()">
+        
+    <header class="site-header" id="top">
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container">
+                <div class="row">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+                          <i class="fa fa-bars"></i>
+                        </button>
+                        <div class="logo-wrapper">
+                            <a class="navbar-brand" href="index.html">
+                                E-<em>class</em>
+                                <span class="logo-s"></span>
+                            </a>
+                        </div>  
+                    </div>
+                    <div class="collapse navbar-collapse" id="main-menu">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li><a href="#top">Home</a></li>
+                            <li><a href="#our-work">Our Work</a></li>
+                            <li><a href="#who-we-are">Who We Are</a></li>
+                            <li><a href="#contact">Contact Us</a></li>
+                        </ul>
+                    </div>
+                </div> 
+            </div>
+        </nav>
+    </header>
+
+    
+    <div class="cta">
+      <div class="container">
+        <div class="row"> 
+          <div class="col-md-12">
+            <h3>Join The Experience</h3>
+            <span>Add a student</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="main-content">
+    
+      <div class="container">
+      
+        <div class="row">
+          <div class="first-section" id="our-work">
+            <div class="col-md-4 col-sm-4 col-xs-4"></div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+
+             Question Title<input type="text" width="100" class="form-control" name="question" id="question"><br/>
+             <div class="form-group">
+                <div class="form-group">
+                 
+                  <select class="form-control" id="selectedValue" onchange="questionType()">
+                    <option value"">Select question type</option>
+                    <option value="paragraph">Paragraph</option>
+                    <option value="multiple">Multiple choice</option>
+                    <option value="checkbox">Checkboxes</option>
+                    
+                  </select>
+</div>
+</div>
+             <div id="page"> 
+               <p id ="questionType"></p>
+               <p id ="extraInput"></p>
+               <p id ="addInput"></p>
+
+             </div>
+             
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4"></div>
+            
+          </div>
+        </div>
+
+        
+      </div><!-- container END -->
+      
+    </div><!-- main content END -->
+
+      <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 col-sm-6 col-sm-12">
+                    <p class="copyright">Copyright &copy; 2084 <a href="#">Company Name</a></p>
+                </div>
+                <div class="col-md-6 col-sm-6 col-sm-12">
+                    <ul class="social">
+                        <li><a href="#" class="fa fa-facebook"></a></li>
+                        <li><a href="#" class="fa fa-twitter"></a></li>
+                        <li><a href="#" class="fa fa-instagram"></a></li>
+                        <li><a href="#" class="fa fa-google-plus"></a></li>
+                    </ul>
+                </div>
+              </div>
+            </div>
+      </footer> 
+
+        <script src="js/vendor/jquery-1.11.0.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.0.min.js"><\/script>')</script>
+        <script src="js/vendor/bootstrap.js"></script>
+        <script src="js/main.js"></script>
+    </body>
+</html>
