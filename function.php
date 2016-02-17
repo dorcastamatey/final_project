@@ -9,16 +9,16 @@ class e_class extends adb{
 		}
 		return $this->query($insert);
 	}
-	function users($name,$role,$email,$password,$contact){
-		$insert="INSERT INTO  users set Name='$name',role='$role',email='$email',password='$password',contact='$contact'";
+	function users($name,$role,$email,$password,$contact,$passkey){
+		$insert="INSERT INTO  users set Name='$name',role='$role',email='$email',password='$password',contact='$contact',passkey='$passkey'";
 		if(!$this->query($insert)){
 			echo "cannot insert";
 			echo mysql_error();
 		}
 		return $this->query($insert);
 	}
-	function teachers ($name,$teacherId,$email,$contact,$password){
-		$insert="INSERT INTO  teacher set name='$name',TeacherId='$teacherId',email='$email',password='$password',contact='$contact'";
+	function student ($name,$course,$email,$contact,$password){
+		$insert="INSERT INTO  students set studentName='$name',email='$email',password='$password',contact='$contact',Course='$course'";
 		if(!$this->query($insert)){
 			echo "cannot insert";
 			echo mysql_error();
@@ -51,12 +51,9 @@ class e_class extends adb{
 		}
 		return $this->query($insert);
 	}
-	function questions($question,$teacherId,$questionType){
+	function questions($question,$questionType,$teacherId){
 		$insert="INSERT INTO questions set question ='$question',teacherId='$teacherId',questionType='$questionType'";
-		if(!$this->query($insert)){
-			echo "cannot insert";
-			echo mysql_error();
-		}
+		
 		return $this->query($insert);
 	}
 	function answers($answer){

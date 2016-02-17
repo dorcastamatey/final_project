@@ -18,6 +18,43 @@
         <link rel="stylesheet" href="css/font-awesome.min.css">
 
         <script src="js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script type="text/javascript">
+
+        function sendRequest(u){
+                
+                var obj=$.ajax({url:u,async:false});
+                
+                var result=$.parseJSON(obj.responseText);
+                
+                return result;  
+                
+            }
+        function addStudents(){
+       
+        var email=$('#email').val();
+        var password=$('#password').val();
+       
+
+        var url="controller.php?cmd=1&email="+email+"&password="+password+;
+        prompt("u",url);
+        var result=sendRequest(url);
+        prompt("u",result);
+       // if(result==1){
+            //document.getElementById('alert').innerHTML='<div class="alert alert-success" ><a href="#" class="close">&times;</a><strong>Success!</strong> A student was successfully added.</div>';
+        //}
+        //else{
+            //document.getElementById('alert').innerHTML='<div class="alert alert-danger">
+               // <a href="#" class="close">&times;</a>  
+               // <strong>Danger!</strong> Something went wrong.A student was not add.
+              //</div>';
+            
+        //}
+
+
+        }
+
+        </script>
+        
     </head>
     <body>
         <!--[if lt IE 7]>
@@ -40,22 +77,8 @@
                     </div>
                     <div class="collapse navbar-collapse" id="main-menu">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#top">Dashboard</a></li>
-                            
-                             <li><a href="students.html">Add students</a></li>
-                            <li role="presentation" class="dropdown">
-                              <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-                                Profile <span class="caret"></span>
-                              </a>
-                              <ul class="dropdown-menu">
-                                <li>Change password</li>
-                                <li>Logout</li>
-                                
-                              </ul>
-                            </li>
-                            
+                           
                         </ul>
-
                     </div>
                 </div> 
             </div>
@@ -65,13 +88,15 @@
     
     <div class="cta">
       <div class="container">
+        <div id="alert">
+
+        </div>
         <div class="row"> 
-          <div class="col-xs-12 col-sm-12 col-md-12">
-            <h3>The Exciting Experience Begins From Here!</h3>
-            <span>Let's Get Started</span>
+          <div class="col-md-12">
+            <h3>Join The Experience</h3>
+            <span>Login</span>
           </div>
         </div>
-
       </div>
     </div>
 
@@ -82,22 +107,28 @@
       
         <div class="row">
           <div class="first-section" id="our-work">
-            <div class=" col-xs-6 col-md-6 col-sm-6">
-              <span>Activity</span>
-              <span >Add students</span>
-              <span>view Student</span>
-              <span>view submission</span>
-              <span>Set quiz</span>
-              <span>chat</span>
+            <div class="col-md-4 col-sm-4 col-xs-4"></div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+              
+               
+                <div class="form-group">
+                  <input type="email" name="email" id="email" placeholder="Email" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                  <input type="password" name="password" id="password" placeholder="Password" class="form-control">
+                </div>
+                
+                <input name="Submit"type="submit" class="button" value="Submit" onclick="login()" /> 
+              
               
             </div>
-            <div class="col-xs-6 col-md-6 col-sm-6">
-              <span> Announcement</span>
-              
-            </div> 
+            <div class="col-md-4 col-sm-4 col-xs-4"></div>
+            
           </div>
         </div>
-       
+
+        
       </div><!-- container END -->
       
     </div><!-- main content END -->
@@ -105,7 +136,7 @@
       <footer>
         <div class="container">
             <div class="row">
-                <div class="col-md-6 col-sm-6 col-xs-12">
+                <div class="col-md-6 col-sm-6 col-sm-12">
                     <p class="copyright">Copyright &copy; 2084 <a href="#">Company Name</a></p>
                 </div>
                 <div class="col-md-6 col-sm-6 col-sm-12">

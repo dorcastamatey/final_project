@@ -29,29 +29,25 @@
                 return result;  
                 
             }
-        function addStudents(){
-        var Name=$('#Name').val();
-        var email=$('#email').val();
-        var password=$('#password').val();
-        var contact=$('#contact').val();
-        var role=$('#roleId').val();
+        function addUsers(){
+                var Name=$('#Name').val();
+                var email=$('#email').val();
+                var password=$('#password').val();
+                var contact=$('#contact').val();
+                var role=$('#role').val();
 
-        var url="controller.php?cmd=1&Name="+Name+"&email="+email+"&password="+password+"&contact="+contact+"&role="+role;
-        prompt("u",url);
-        var result=sendRequest(url);
-        prompt("u",result);
-       // if(result==1){
-            //document.getElementById('alert').innerHTML='<div class="alert alert-success" ><a href="#" class="close">&times;</a><strong>Success!</strong> A student was successfully added.</div>';
-        //}
-        //else{
-            //document.getElementById('alert').innerHTML='<div class="alert alert-danger">
-               // <a href="#" class="close">&times;</a>  
-               // <strong>Danger!</strong> Something went wrong.A student was not add.
-              //</div>';
-            
-        //}
+                var url="controller.php?cmd=1&Name="+Name+"&email="+email+"&password="+password+"&contact="+contact+"&role="+role;
+                prompt("u",url);
+                var getResult= sendRequest(url);
+                prompt("u",url);
+                   if(getResult.result==0){
+                    alert(getResult.message);
 
-
+                   }
+                   else{
+                    alert(getResult.message);
+                   }
+       
         }
 
         </script>
@@ -78,10 +74,7 @@
                     </div>
                     <div class="collapse navbar-collapse" id="main-menu">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#top">Home</a></li>
-                            <li><a href="#our-work">Our Work</a></li>
-                            <li><a href="#who-we-are">Who We Are</a></li>
-                            <li><a href="#contact">Contact Us</a></li>
+                           
                         </ul>
                     </div>
                 </div> 
@@ -98,7 +91,7 @@
         <div class="row"> 
           <div class="col-md-12">
             <h3>Join The Experience</h3>
-            <span>Add a student</span>
+            <span>Add a user</span>
           </div>
         </div>
       </div>
@@ -130,7 +123,7 @@
                 <div class="form-group">
                   <input type="text" name="contact" id="contact" placeholder="contact" class="form-control">
                 </div>
-                <input name="Submit"type="submit" class="button" value="Submit" onclick="addStudents()" /> 
+                <input name="Submit"type="submit" class="button" value="Submit" onclick="addUsers()" /> 
               
               
             </div>

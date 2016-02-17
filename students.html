@@ -34,23 +34,18 @@
         var email=$('#email').val();
         var password=$('#password').val();
         var contact=$('#contact').val();
-        var role=$('#roleId').val();
+        var course=$('#course').val();
 
-        var url="controller.php?cmd=1&Name="+Name+"&email="+email+"&password="+password+"&contact="+contact+"&role="+role;
+        var url="controller.php?cmd=1&Name="+Name+"&email="+email+"&password="+password+"&contact="+contact+"&course="+course;
         prompt("u",url);
-        var result=sendRequest(url);
-        prompt("u",result);
-       // if(result==1){
-            //document.getElementById('alert').innerHTML='<div class="alert alert-success" ><a href="#" class="close">&times;</a><strong>Success!</strong> A student was successfully added.</div>';
-        //}
-        //else{
-            //document.getElementById('alert').innerHTML='<div class="alert alert-danger">
-               // <a href="#" class="close">&times;</a>  
-               // <strong>Danger!</strong> Something went wrong.A student was not add.
-              //</div>';
-            
-        //}
+        var getResult= sendRequest(url);
+           if(getResult.result==0){
+            alert(getResult.message);
 
+           }
+           else{
+            alert(getResult.message);
+           }
 
         }
 
@@ -78,10 +73,8 @@
                     </div>
                     <div class="collapse navbar-collapse" id="main-menu">
                         <ul class="nav navbar-nav navbar-right">
-                            <li><a href="#top">Home</a></li>
-                            <li><a href="#our-work">Our Work</a></li>
-                            <li><a href="#who-we-are">Who We Are</a></li>
-                            <li><a href="#contact">Contact Us</a></li>
+                            <li><a href="#top">Dashboard</a></li>
+                            
                         </ul>
                     </div>
                 </div> 
@@ -117,9 +110,7 @@
                 <div class="form-group">
                   <input type="text" name="Name" id="Name" placeholder=" Name" class="form-control">
                 </div>
-                <div class="form-group">
-                  <input type="text" name="role" id="role" placeholder="Role" class="form-control">
-                </div>
+                
                 <div class="form-group">
                   <input type="email" name="email" id="email" placeholder="Email" class="form-control">
                 </div>
@@ -129,6 +120,9 @@
                 </div>
                 <div class="form-group">
                   <input type="text" name="contact" id="contact" placeholder="contact" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input type="text" name="course" id="course" placeholder="course" class="form-control">
                 </div>
                 <input name="Submit"type="submit" class="button" value="Submit" onclick="addStudents()" /> 
               
