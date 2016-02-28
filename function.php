@@ -9,16 +9,16 @@ class e_class extends adb{
 		}
 		return $this->query($insert);
 	}
-	function users($name,$role,$email,$password,$contact){
-		$insert="INSERT INTO  users set Name='$name',role='$role',email='$email',password='$password',contact='$contact'";
+	function users($name,$role,$email,$password,$contact,$passkey){
+		$insert="INSERT INTO  users set Name='$name',role='$role',email='$email',password='$password',contact='$contact',passkey='$passkey'";
 		if(!$this->query($insert)){
 			echo "cannot insert";
 			echo mysql_error();
 		}
 		return $this->query($insert);
 	}
-	function teachers ($name,$teacherId,$email,$contact,$password){
-		$insert="INSERT INTO  teacher set name='$name',TeacherId='$teacherId',email='$email',password='$password',contact='$contact'";
+	function student ($name,$course,$email,$contact,$password){
+		$insert="INSERT INTO  students set studentName='$name',email='$email',password='$password',contact='$contact',Course='$course'";
 		if(!$this->query($insert)){
 			echo "cannot insert";
 			echo mysql_error();
@@ -51,16 +51,14 @@ class e_class extends adb{
 		}
 		return $this->query($insert);
 	}
-	function questions($question,$teacherId,$questionType){
-		$insert="INSERT INTO questions set question ='$question',teacherId='$teacherId',questionType='$questionType'";
-		if(!$this->query($insert)){
-			echo "cannot insert";
-			echo mysql_error();
-		}
+	function questions($question,$answer,$questionType,$teacherId,$class,$subject){
+		$insert="INSERT INTO questions set question ='$question',answer='$answer',teacherId=
+		'$teacherId',questionType='$questionType',subject='$subject',class='$class'";
+		
 		return $this->query($insert);
 	}
-	function answers($answer){
-		$insert="INSERT INTO answer set possible_answers='$answer'";
+	function answers($answer,$questionId){
+		$insert="INSERT INTO answer set answer='$answer',questionId='$questionId'";
 		if(!$this->query($insert)){
 			echo "cannot insert";
 			echo mysql_error();	
@@ -113,20 +111,22 @@ class e_class extends adb{
    	return $this->query($select);
    }
    function selectQuestion(){
-   	  $select="SELECT question FROM questons";
+   	  $select="SELECT question,answer FROM questions";
    	  if(!$this->query($select)){
    		echo "cannot select";
    		echo mysql_error();
    	}
-   	  return $this->query($select);
+   	  return $this->fetch();
    }
-   function selectAnswers(){
-   	  $select="SELECT answer1,answer2,answer3,answer4,answer5,answer6 FROM answer";
+   function selectAnswers($qno){
+   	$select ="SELECT answer.answer, questions.question FROM  questions INNER JOIN answer ON answer.questionId=questions.questionId where answer.questionId = $qno";
+   	  //$select="SELECT   questions.question, answer.answer,questions.questionType FROM answer, 
+   	  //questions WHERE answer.questionId=questions.questionId";
    	  if(!$this->query($select)){
    		echo "cannot insert";
    		echo mysql_error();
    	}
-   	  return $this->query($select);
+   	  return $this->fetch();
    }
    function selectChildren($email){
    	 $select="SELECT childsName FROM parents_table where email='$email'";
@@ -134,7 +134,7 @@ class e_class extends adb{
    		echo "cannot select";
    		echo mysql_error();
    	}
-   	 return $this->query($select);
+   	 return $this->fetch();
 
    }
 }

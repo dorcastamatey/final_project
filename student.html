@@ -3,6 +3,7 @@
   <head>
    <title></title>
    <link rel="stylesheet" href="css/bootstrap.min.css">
+   <link rel="stylesheet" href="style.css">
    <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="jquery-1.12.0.min.js"></script>
    <script src="js/bootstrap.min.js"></script>
@@ -16,41 +17,39 @@
                 return result;  
                 
             }
-             function addUsers(){
-                var Name=$('#Name').val();
-                var email=$('#email').val();
-                var password=$('#password').val();
-                var contact=$('#contact').val();
-                var role=$('#role').val();
+        function addStudents(){
+          var Name=$('#Name').val();
+          var email=$('#email').val();
+          var password=$('#password').val();
+          var contact=$('#contact').val();
+          var course=$('#course').val();
 
-                var url="controller.php?cmd=1&Name="+Name+"&email="+email+"&password="+password+"&contact="+contact+"&role="+role;
-                prompt("u",url);
-                var getResult= sendRequest(url);
-                prompt("u",url);
-                   if(getResult.result==0){
-                    alert(getResult.message);
+          var url="controller.php?cmd=2&Name="+Name+"&email="+email+"&password="+password+"&contact="+contact+"&course="+course;
+          prompt("u",url);
+          var getResult= sendRequest(url);
+             if(getResult.result==0){
+              alert(getResult.message);
 
-                   }
-                   else{
-                    alert(getResult.message);
-                   }
-       
+             }
+             else{
+              alert(getResult.message);
+             }
+
         }
+     
    </script>
    
   
   </head>
   <body>
-   <nav class="navbar navbar-inverse">
+   <nav class="navbar navbar-default">
       <div class="container-fluid">
        <div class="navbar-header">
-        <a class="navbar-brand" href="#">WebSiteName</a>
+        <a class="navbar-brand" href="#">E-class</a>
        </div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Page 1</a></li>
-        <li><a href="#">Page 2</a></li> 
-        <li><a href="#">Page 3</a></li> 
+        <li class=""><a href="Dashboard.html">Dashboard</a></li>
+        
       </ul>
     </div>
 </nav>
@@ -59,14 +58,12 @@
    <div class="jumbotron" style="backgroud-color:black;">
 
       <div class="row">
-		  <div class="col-sm-3">first column</div>
-		  <div class="col-sm-6" style="backgroud-color:white" id="display">middle
-         <div class="form-group">
+		  <div class="col-sm-3"></div>
+		  <div class="col-sm-6" style="backgroud-color:white" id="display">
+                <div class="form-group">
                   <input type="text" name="Name" id="Name" placeholder=" Name" class="form-control">
                 </div>
-                <div class="form-group">
-                  <input type="text" name="role" id="role" placeholder="Role" class="form-control">
-                </div>
+                
                 <div class="form-group">
                   <input type="email" name="email" id="email" placeholder="Email" class="form-control">
                 </div>
@@ -80,21 +77,15 @@
        
       <button type="button" class="btn btn-default" name="submit" onclick="questions()"> submit</button><br/>
                  
-            </div>
+      </div>
 		  </div>
-		  <div class="col-sm-3">last</div>
+		  <div class="col-sm-3"></div>
     </div>
-    <div class="col-sm-3"></div>
-     <div class="col-sm-6">
-            <div id="add"></div>
-     </div>
-      <div class="col-sm-3"></div>
-
     
    	 </div>
 
 
-   </div>
+
 
   </body>
 

@@ -1,0 +1,156 @@
+<!Doctype html>
+<html>
+<head>
+ <title></title>
+ <link rel="stylesheet" href="css/bootstrap.min.css">
+ <link rel="stylesheet" href="style.css">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+
+ <script type="text/javascript">
+ 
+ function sendRequest(u){
+      var obj = $.ajax({url:u, async:false});
+
+      var result = $.parseJSON(obj.responseText);
+
+      return result;
+}
+    var questions= new Array();
+    var answers=new Array();
+    var num;
+    var count=0;
+    var pos=0;
+    var Qno = 1;
+    var choices;
+    var quesNum=0;
+    var correct=0;
+
+function grade(){
+    var url="controller.php?cmd=10";
+     var display =sendRequest(url);
+     quesNum=display.message.length;
+     alert(quesNum);
+     //number of questions
+     for(var ans=0;ans<quesNum;ans++){ 
+
+      answers[ans]=display.message[ans].answer;//array of answers
+     }
+
+}
+
+function display(){
+     
+
+     var url="controller.php?cmd=9&ques="+Qno;
+
+     var display =sendRequest(url);
+
+     num=display.message.length;//
+
+    var queston = display.message[0].question;
+    var  displayQuestions=document.getElementById("quiz");
+    displayQuestions.innerHTML=displayQuestions.innerHTML=queston;
+
+
+     for(var i=1; i<num; i++){
+      if(display.message[i].question == queston){
+        //console.log(display.message[i].answer);
+        displayQuestions.innerHTML=displayQuestions.innerHTML+'<div class="radio"> <label><input type="radio"  name="multiple" value="'+display.message[i].answer+'">'+display.message[i].answer+'</label></div>';        
+      }
+    }
+
+    displayQuestions.innerHTML=displayQuestions.innerHTML+'<button type="button" class="btn btn-default" name="submit" onclick="quizAnswer()"> submit</button>';
+
+
+
+  }
+  function quizAnswer(){
+    grade();
+    
+    document.getElementById("status").innerHTML="Question "+(pos+1)+"of "+quesNum;
+     choices=document.getElementsByName("multiple");
+     for(ans=0; ans<choices.length;ans++){
+      if(choices[ans].checked){
+        choices=choices[ans].value;
+        //alert(choices);
+
+      }
+     }
+     if(choices==answers[count]){
+         
+         correct++;
+         alert(correct);
+
+      }
+     pos++;
+     Qno++;
+     count++;
+    display();
+   
+
+
+
+      //var count=0;
+      
+     //alert(questions[1]); 
+
+
+   }
+
+
+
+
+
+
+
+   </script>
+
+ </head>
+ <body onload="display()" >
+   <nav class="navbar navbar-default" style="backgroud-color:#33ccff;" >
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <a class="navbar-brand" href="#" color="white">E-class</a>
+      </div>
+      <ul class="red nav navbar-nav">
+        <li><a href="studentDashboard.html">Dashboard</a></li>
+        
+      </ul>
+    </div>
+  </nav>
+
+  <div class="container">
+   <div class="jumbotron" style="backgroud-color:black;">
+
+    <div class="row">
+      <div class="col-sm-3">
+
+      </div>
+      
+
+      <div class="col-sm-6" style="backgroud-color:white" id="display_" >
+           <font color="black">
+             <div id ="quiz" class="col-sm-6" >
+
+              </div>
+              </font>
+        </div>
+        
+        <div id="status" class="col-sm-3" style="backgroud-color:white"></div>
+        
+           
+      
+      
+    </div>
+
+
+  </div>
+</div>
+
+
+
+<script src="js/jquery-1.12.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,222 @@
+<!Doctype html>
+<html>
+<head>
+ <title></title>
+ <link rel="stylesheet" href="css/bootstrap.min.css">
+ <link rel="stylesheet" href="style.css">
+ <meta name="viewport" content="width=device-width, initial-scale=1">
+
+ <script type="text/javascript">
+ var count=15;
+ var id=1;
+ var qId=0;
+ var answer=2;
+ var ans;
+ function first(){
+
+   var subject=document.getElementById("subjects");
+   var result=subject.options[subject.selectedIndex].value;
+   ans=document.getElementById("quizType");
+   var result2=ans.options[ans.selectedIndex].value;
+   var teacherId=$("#teacherId").val();
+   var theClass=document.getElementById("classes").value;
+     //questions();
+     //var btn=$("#btn").val();
+     
+   }
+   function questions()   {
+
+    remove_div('display_');
+      show('view_')
+        //first();
+        ans=document.getElementById("quizType");
+        var result2=ans.options[ans.selectedIndex].value;
+        if(result2=="paragraph"){
+
+         document.getElementById("view_").innerHTML='<div class=" from-group"><input type="text"  name="question" placeholder="question" id="'+id+'" class="form-control" ></input><br/><br/><button type="button" class="btn btn-default" name="submit" onclick="question()"> submit</button><br/></div><br/>';  
+       }
+       if(result2=="multiple") {
+         document.getElementById("view_").innerHTML='<div class=" form-group"><input type="text"  name="question" placeholder="question" class="form-control" id="'+id+'"></input><br/> <input type="text"  name="questionId" placeholder="question Id" id="'+qId+'" class="form-control" ></input><br/> <input type="text"  name="answer" placeholder="correct answer" id="'+answer+'" class="form-control" ></input><br/><button type="button" class="btn btn-default" name="submit" onclick="addTextField()"> Add answer options</button><br/></div>';
+
+         document.getElementById("add").innerHTML="<button type='button' class='btn btn-default' name='submit' onclick='insertIntoDatabase()'> submit</button>"
+       }
+     }
+     function addTextField(){
+      count++;
+      var add =document.getElementById("view_");
+      add.innerHTML=add.innerHTML+'<div class=" form-group"><input type="text" id="'+count+'" name="name" placeholder="answer" class="form-control"></input><br/></div>';
+      
+    }
+    function sendRequest(u){
+      var obj = $.ajax({url:u, async:false});
+
+      var result = $.parseJSON(obj.responseText);
+
+      return result;
+    }
+    function remove_div() {
+
+      for (var i = 0; i < arguments.length; i++) {
+
+        var input = arguments[i];
+        $('#' + input).addClass('hide'); 
+      }
+
+    }
+
+    function show() {
+      for (var i = 0; i < arguments.length; i++) {
+
+        var input = arguments[i];
+
+        $('#' + input).removeClass('hide');
+        $('#' + input).show();
+      }
+
+
+    }
+    function insertIntoDatabase(){
+      //question();
+
+      
+      var ans2="";
+      for (i=16; i<=count; i++){
+              
+              var ans =document.getElementById(i).value;
+
+            if (i==16) {
+               //alert("if: "+ans);
+             ans2=ans; 
+           }
+           else{
+            //alert("else:"+ans);
+            ans2=ans2+","+ans;
+          }
+        }
+        var questionId=document.getElementById(qId).value; 
+
+        var url="controller.php?cmd=8&QnA="+ans2+"&questionId="+questionId;
+            //prompt("u",url);
+            var getResult=sendRequest(url);
+             if(getResult.result==0){
+            alert("not successful");
+
+           }
+           else{
+            alert("successful");
+           }
+    }
+    function question(){
+      ans=document.getElementById("quizType");
+      var result2=ans.options[ans.selectedIndex].value;
+      //alert(result2);
+      var subject=document.getElementById("subjects");
+      var result=subject.options[subject.selectedIndex].value;
+      ans=document.getElementById("quizType");
+      var result2=ans.options[ans.selectedIndex].value;
+      var teacherId=$("#teacherId").val();
+      var theClass=document.getElementById("classes").value;
+
+      var question=document.getElementById(id).value;
+            //var teacherId=$("#teacherId").val();
+            //var qType=document.getElementById("selectedValue").value;
+            var theAns =document.getElementById(answer).value;
+            
+            var url="controller.php?cmd=7&question="+question+"&teacherId="+teacherId+"&qType="+result2+"&subject="+result+"&class="+theClass+"&answer="+theAns;
+            prompt("u",url);
+            var getResult= sendRequest(url);
+            if(getResult.result==0){
+              alert(getResult.message);
+
+            }
+            else{
+              alert(getResult.message);
+            }
+                        //prompt("uss",url);
+
+                      }
+
+
+
+
+                      </script>
+
+
+                    </head>
+                    <body >
+                     <nav class="navbar navbar-default" style="backgroud-color:#33ccff;" >
+                      <div class="container-fluid">
+                       <div class="navbar-header">
+                        <a class="navbar-brand" href="#">E-class</a>
+                      </div>
+                      <ul class="nav navbar-nav">
+                        <li class=""><a href="teacherDashboard.html">Dashboard</a></li>
+                        
+                      </ul>
+                    </div>
+                  </nav>
+
+                  <div class="container">
+                   <div class="jumbotron" style="backgroud-color:black;">
+
+                    <div class="row">
+                      <div class="col-sm-3"></div>
+                      <div class="col-sm-6" style="backgroud-color:white" id="display_">
+
+                        <div class"form-group">
+                          <select class="form-control" id="subjects">
+
+                           <option value"">Select subject</option>
+                           <option value="Mathe">Mathe</option>
+                           <option value="English">English</option>
+                           <option value="Science">Science</option>
+                         </select> <br/>
+                       </div>
+                       <div class"form-group">
+                        <select class="form-control" id="quizType">
+                         <option value"">Quiz type</option>
+                         <option value="paragraph">Paragraph</option>
+                         <option value="multiple">Multiple choice</option>    
+                       </select><br/>
+                     </div> 
+                     Teacher ID<input type="text" width="100" class="form-control" name="id" id="teacherId" placeholder="Teacher ID"><br/>
+                     <div class"form-group">
+                      <select class="form-control" id="classes">
+                        <option value"">Class</option>
+                        <option value="grade 1">grade 1</option>
+                        <option value="grade 2">grade 2</option> 
+                        <option value="grade 3">grade 3</option>
+                        <option value="grade 4">grade  4</option> 
+                        <option value="grade 5">grade 5</option>
+                        <option value="grade 6">grade 6</option>
+                        <option value="JHS1">JHS1</option>
+                        <option value="JHS2">JHS2</option>
+                        <option value="JHS3">JHS3</option>
+                        
+
+                      </div>
+                    </select><br/> 
+                    <button type="button" class="btn btn-default" name="submit" id="btn" onclick="questions()" > submit</button><br/>
+
+                  </div>
+                </div>
+                <div class="col-sm-6" style="backgroud-color:white" id="view_">
+
+                </div>
+                
+                  
+                </div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6"> <div  id="add"></div>
+                <div class="col-sm-3"></div>
+               
+              </div>
+             </div>
+
+
+          </div>
+          <script src="js/jquery-1.12.0.min.js"></script>
+          <script src="js/bootstrap.min.js"></script>
+        </body>
+
+        </html>

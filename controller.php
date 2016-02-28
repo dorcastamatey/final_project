@@ -1,29 +1,35 @@
-<?php
-$cmd=$_REQUEST['cmd'];
-switch ($cmd) {
+ <?php
+ $cmd=$_REQUEST['cmd'];
+ switch ($cmd) {
 	case 1:
 		addusers();
 		break;
     case 2;
-	   addTeachers();
+	   addStudent();
 	   break;
 	case 3;
 	addSchool();
 	  break;
-	case 4;
+    case 4;
 	addParents();
 	break;
 	case 5;
 	addSubjects();
 	break;
 	case 6;
-	addClass();
+	 addClass();
+	 break;
+	 case 7;
+	 addQuestions();
 	break;
-	case 7;
-	addQuestions();
+	 case 8;
+	 addAnswers();
 	break;
-	case 8;
-	addAnswers();
+	case 9;
+	viewQnA();
+	break;
+	case 10;
+	viewQuestions();
 	break;
 	default:
 		# code...
@@ -37,84 +43,182 @@ function addusers(){
 	$contact=$_REQUEST['contact'];
 	$email=$_REQUEST['email'];
 	$password=$_REQUEST['password'];
+	$passkey=md5(rand(0,1000));
 
-	$add->users($name,$role,$email,$password,$contact);
+	if(!$add->users($name,$role,$email,$password,$contact,$passkey)){
 
+	echo '{"result": 0, "message": "user was not added"}';
+	return;
 }
-function addTeachers(){
+echo '{"result": 1, "message": "user was added successfully"}';
+return;
+
+	}
+
+
+function addStudent(){
 	include("function.php");
 	$add=new e_class();
-	$name=$_REQUEST['teacherName'];
-	$id=$_REQUEST['teacherId'];
+	$name=$_REQUEST['Name'];
+	$course=$_REQUEST['course'];
 	$contact=$_REQUEST['contact'];
 	$email=$_REQUEST['email'];
 	$password=$_REQUEST['password'];
-	$add->teachers($name,$id,$email,$contact,$password);
+	if(!$add->student($name,$course,$email,$contact,$password)){
+
+	echo '{"result": 0, "message": "student was not added"}';
+	return;
+}
+echo '{"result": 1, "message": "student was added successfully"}';
+return;
 
 }
 function addSchool(){
 
-	include("function.php");
-	//$add=new e_class();
-	//$name=$_REQUEST['schoolName'];
-	//$contact=$_REQUEST['contact'];
-	//$email=$_REQUEST['email'];
-	//$password=$_REQUEST['password'];
-	//$address=$_REQUEST['address'];
-	//$passkey=md5(rand(0,1000));
-	//$add->school($name,$contact,$email,$address,$password,$passkey);
-	//$to =$email;
-	//$subject='Account verification ';
-	//$message=' Thank you for signing up on e-class
-	//please click this link to activate your account:
-	//http://localhost/E-classMobile/verification.php?email=
-	//"$email"&passkey="&$passkey"';
-	//$headers='From:e-class@noreply.com'."\n";
-	//mail($to, $subject, $message);
+	// include("function.php");
+	// $add=new e_class();
+	// $name=$_REQUEST['schoolName'];
+	// $contact=$_REQUEST['contact'];
+	// $email=$_REQUEST['email'];
+	// $password=$_REQUEST['password'];
+	// $address=$_REQUEST['address'];
+	// $passkey=md5(rand(0,1000));
+	// $add->school($name,$contact,$email,$address,$password,$passkey);
+	
 
 }
-function addParents(){
-	include("function.php");
-	$add=new e_class();
-	$name=$_REQUEST['parentName'];
-	$email=$_REQUEST['email'];
-	$password=$_REQUEST['password'];
-	$child=$_REQUEST['child'];
-	$add->parents($name,$email,$password,$child);
+// // function addParents(){
+// // 	include("function.php");
+// // 	$add=new e_class();
+// // 	$name=$_REQUEST['parentName'];
+// // 	$email=$_REQUEST['email'];
+// // 	$password=$_REQUEST['password'];
+// // 	$child=$_REQUEST['child'];
+// // 	$add->parents($name,$email,$password,$child);
 
-}
+//}
 function addSubjects(){
 	include("function.php");
 	$add=new e_class();
 	$subjectName=$_REQUEST['subjectName'];
 	$subjectId=$_REQUEST['subjectId'];
-	$add->subject($subjectName,$subjectId);
+	if(!$add->subject($subjectName,$subjectId)){
+	echo '{"result": 0, "message": "subject was not added"}';
+	return;
+}
+echo '{"result": 1, "message": "subject was added successfully"}';
+return;
 }
 function addClass(){
 	include("function.php");
 	$add=new e_class();
 	$class=$_REQUEST['classId'];
-	$add->theClass($class);
+	if(!$add->theClass($class)){
+	echo '{"result": 0, "message": "class was not added"}';
+	return;
 }
+echo '{"result": 1, "message": "class was added successfully"}';
+return;
+
+}
+
 function addQuestions(){
 	include("function.php");
 	$add=new e_class();
 	$teacherId=$_REQUEST['teacherId'];
 	$question=$_REQUEST['question'];
-	$questionType=$_REQUEST['questionType'];
-	$add->questions($teacherId,$questionType,$question);
+	$questionType=$_REQUEST['qType'];
+	$answer=$_REQUEST['answer'];
+	$class=$_REQUEST['class'];
+	$subject=$_REQUEST['subject'];
+
+	if(!$add->questions($question,$answer,$questionType,$teacherId,$class,$subject)){
+	echo '{"result": 0, "message": "Question was not added"}';
+	return;
 }
+echo '{"result": 1, "message": "Question was added successfully"}';
+return;
+
+	//echo "hello";
+	
+}
+
+
 function addAnswers(){
 	include("function.php");
 	$add=new e_class();
 	$ans=$_REQUEST['QnA'];
 	//echo $array[0];
 	$answer=explode(",", $ans);
-     //echo sizeof($answer);
+    // echo sizeof($answer);
+    $questionId=$_REQUEST['questionId'];
 	for( $array=0;$array<=sizeof($answer)-1; $array++){
-	$add->answers($answer[$array]);
+		$thisAns=$add->answers($answer[$array],$questionId);
+	}
+
+	if(!$thisAns){
+		echo '{"result": 0, "message": "answer was not added"}';
+	return;
 }
+echo '{"result": 1, "message": "answer was added successfully"}';
+
+	
+   return;
 }
+
+function viewQnA(){
+
+		  include("function.php");
+		  $obj=new e_class();
+
+		  $qno = $_REQUEST["ques"];
+		
+		if ($row=$obj->selectAnswers($qno))
+		{
+			echo '{"result":1, "message":[';
+		    while ($row)
+		{
+		 echo json_encode($row);
+			
+			 $row = $obj->fetch (); 
+			if ($row){
+				echo ",";
+			}
+		}
+			echo "]}";
+		}
+		else{
+		echo '{"result":0, "message":"not display"}';
+		}
+		}
+
+		function viewQuestions(){
+
+		  include("function.php");
+		  $obj=new e_class();
+
+		  //$qno = $_REQUEST["ques"];
+		
+		if ($row=$obj->selectQuestion())
+		{
+			echo '{"result":1, "message":[';
+		    while ($row)
+		{
+		 echo json_encode($row);
+			
+			 $row = $obj->fetch (); 
+			if ($row){
+				echo ",";
+			}
+		}
+			echo "]}";
+		}
+		else{
+		echo '{"result":0, "message":"not display"}';
+		}
+		}
+
+
 
 
 ?>
