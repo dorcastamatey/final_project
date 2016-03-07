@@ -24,23 +24,35 @@
     var choices;
     var quesNum=0;
     var correct=0;
+    var yourAns=new Array();
+
 
 function grade(){
     var url="controller.php?cmd=10";
      var display =sendRequest(url);
      quesNum=display.message.length;
-     alert(quesNum);
+     //alert(quesNum);
      //number of questions
      for(var ans=0;ans<quesNum;ans++){ 
 
       answers[ans]=display.message[ans].answer;//array of answers
+      questions[ans]=display.message[ans].question;
      }
 
 }
 
 function display(){
-     
+  grade();
 
+  if(pos==quesNum){
+    remove_div('quiz');
+      show('review')
+
+    
+    reviewTest();
+  }
+     
+ else{
      var url="controller.php?cmd=9&ques="+Qno;
 
      var display =sendRequest(url);
@@ -60,42 +72,79 @@ function display(){
     }
 
     displayQuestions.innerHTML=displayQuestions.innerHTML+'<button type="button" class="btn btn-default" name="submit" onclick="quizAnswer()"> submit</button>';
+    document.getElementById("status").innerHTML="Question "+(pos+1)+ " of " +quesNum;
 
 
 
   }
+}
   function quizAnswer(){
     grade();
     
-    document.getElementById("status").innerHTML="Question "+(pos+1)+"of "+quesNum;
+    
      choices=document.getElementsByName("multiple");
      for(ans=0; ans<choices.length;ans++){
       if(choices[ans].checked){
         choices=choices[ans].value;
+        yourAns[count]=choices; 
         //alert(choices);
 
       }
      }
      if(choices==answers[count]){
          
-         correct++;
-         alert(correct);
+         correct++; 
+          
+          //alert(questions[count]);
 
       }
      pos++;
      Qno++;
      count++;
     display();
-   
+  }
+  function reviewTest(){
+          grade();
+          var  displayQuestions=document.getElementById("review");
+          displayQuestions.innerHTML=displayQuestions.innerHTML+"you scored "  +correct+ " out "+quesNum+ "  questions <br/>" ;
+          displayQuestions.innerHTML=displayQuestions.innerHTML+"<strong>Quiz review</strong>";
+
+          for(var QnA=0;QnA<=quesNum;QnA++){
+            alert("");
+            var ques=questions[QnA];
+            var ans =answers[QnA];
+            var yourAnswer=yourAns[QnA];
+          displayQuestions.innerHTML=displayQuestions.innerHTML+'<div class="radio"> <label><input type="radio"  name="multiple" >'+ques+'</label></div>'; 
+          displayQuestions.innerHTML=displayQuestions.innerHTML+"<strong>correct answer</strong> "+ans+'<br/>';
+          displayQuestions.innerHTML=displayQuestions.innerHTML+"Your answer "+yourAnswer+'<br/>';
 
 
-
-      //var count=0;
-      
-     //alert(questions[1]); 
+        }
 
 
-   }
+  }
+
+   function remove_div() {
+
+          for (var i = 0; i < arguments.length; i++) {
+
+            var input = arguments[i];
+            $('#' + input).addClass('hide'); 
+          }
+
+    }
+
+    function show() {
+          for (var i = 0; i < arguments.length; i++) {
+
+            var input = arguments[i];
+
+            $('#' + input).removeClass('hide');
+            $('#' + input).show();
+          }
+
+
+    }
 
 
 
@@ -131,6 +180,9 @@ function display(){
       <div class="col-sm-6" style="backgroud-color:white" id="display_" >
            <font color="black">
              <div id ="quiz" class="col-sm-6" >
+
+              </div>
+              <div id="review">
 
               </div>
               </font>

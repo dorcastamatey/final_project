@@ -1,0 +1,99 @@
+<!Doctype html>
+<html>
+  <head>
+   <title></title>
+   <link rel="stylesheet" href="css/bootstrap.min.css">
+   <link rel="stylesheet" href="style.css">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="jquery-1.12.0.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+   <script type="text/javascript">
+      function sendRequest(u){
+                
+                var obj=$.ajax({url:u,async:false});
+                
+                var result=$.parseJSON(obj.responseText);
+                
+                return result;  
+                
+            }
+        function addParents(){
+          var mName=$('#mName').val();
+          var fName=$('#fName').val();
+          var email=$('#email').val();
+          var password=$('#password').val();
+          var childName=$('#childName').val();
+          var ID=$('#ID').val();
+
+          var url="controller.php?cmd=2&mName="+mName+" &fname="+fname+"&email="+email+"&password="+password+"&childName="+childName+"&ID="+ID;
+          prompt("u",url);
+          var getResult= sendRequest(url);
+             if(getResult.result==0){
+              alert(getResult.message);
+
+             }
+             else{
+              alert(getResult.message);
+             }
+
+        }
+     
+   </script>
+   
+  
+  </head>
+  <body>
+   <nav class="navbar navbar-default">
+      <div class="container-fluid">
+       <div class="navbar-header">
+        <a class="navbar-brand" href="#">E-class</a>
+       </div>
+      <ul class="nav navbar-nav">
+        <li class=""><a href="Dashboard.html">Dashboard</a></li>
+        
+      </ul>
+    </div>
+</nav>
+
+   <div class="container">
+   <div class="jumbotron" style="backgroud-color:black;">
+
+      <div class="row">
+		  <div class="col-sm-3"></div>
+		  <div class="col-sm-6" style="backgroud-color:white" id="display">
+                <div class="form-group">
+                  <input type="text" name="fName" id="fName" placeholder=" father's name" class="form-control">
+                </div>
+                 <div class="form-group">
+                  <input type="text" name="mName" id="mName" placeholder="mother's name" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                  <input type="email" name="email" id="email" placeholder="Email" class="form-control">
+                </div>
+                
+                <div class="form-group">
+                  <input type="password" name="password" id="password" placeholder="Password" class="form-control">
+                </div>
+                <div class="form-group">
+                  <input type="text" name="childName" id="childName" placeholder="child's name" class="form-control">
+                </div>
+                 <div class="form-group">
+                  <input type="text" name="ID" id="ID" placeholder="Child ID" class="form-control">
+                </div>
+                 
+      <button type="button" class="btn btn-default" name="submit" onclick="questions()"> submit</button><br/>
+                 
+      </div>
+		  </div>
+		  <div class="col-sm-3"></div>
+    </div>
+    
+   	 </div>
+
+
+
+
+  </body>
+
+</html>

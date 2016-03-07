@@ -27,8 +27,8 @@ class e_class extends adb{
 		}
 		return $this->query($insert);
 	}
-	function parents($name,$email,$password,$child){
-		$insert="INSERT INTO parents_table set parentsName='$name',email='$email',password='$password',childsName='$child'";
+	function parents($mothersName,$fathersName,$email,$password,$child,$childId){
+		$insert="INSERT INTO parents set father'sName='$fathersName',mother'sName='$mothersName'email='$email',password='$password',child'sName='$child' child'sId='$childId";
 		if(!$this->query($insert)){
 			echo "cannot insert";
 			echo mysql_error();
@@ -129,7 +129,7 @@ class e_class extends adb{
    	  return $this->fetch();
    }
    function selectChildren($email){
-   	 $select="SELECT childsName FROM parents_table where email='$email'";
+   	 $select="SELECT child'sName, child'sId FROM parents where email='$email'";
    	 if(!$this->query($select)){
    		echo "cannot select";
    		echo mysql_error();

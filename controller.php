@@ -31,6 +31,7 @@
 	case 10;
 	viewQuestions();
 	break;
+
 	default:
 		# code...
 		break;
@@ -87,16 +88,18 @@ function addSchool(){
 	
 
 }
-// // function addParents(){
-// // 	include("function.php");
-// // 	$add=new e_class();
-// // 	$name=$_REQUEST['parentName'];
-// // 	$email=$_REQUEST['email'];
-// // 	$password=$_REQUEST['password'];
-// // 	$child=$_REQUEST['child'];
-// // 	$add->parents($name,$email,$password,$child);
+ function addParents(){
+	include("function.php");
+	$add=new e_class();
+	$fName=$_REQUEST['fName'];
+	$mName=$_REQUEST['mName'];
+	$email=$_REQUEST['email'];
+	$password=$_REQUEST['password'];
+	$child=$_REQUEST['childName'];
+	$childId=$_REQUEST['ID'];
+	$add->parents($fName,$mName,$email,$password,$child,$childId);
 
-//}
+}
 function addSubjects(){
 	include("function.php");
 	$add=new e_class();
@@ -218,6 +221,31 @@ function viewQnA(){
 		}
 		}
 
+	function viewChildren(){
+
+		  include("function.php");
+		  $obj=new e_class();
+
+		  //$qno = $_REQUEST["ques"];
+		
+		if ($row=$obj->selectChildren())
+		{
+			echo '{"result":1, "message":[';
+		    while ($row)
+		{
+		 echo json_encode($row);
+			
+			 $row = $obj->fetch (); 
+			if ($row){
+				echo ",";
+			}
+		}
+			echo "]}";
+		}
+		else{
+		echo '{"result":0, "message":"not display"}';
+		}
+		}
 
 
 
