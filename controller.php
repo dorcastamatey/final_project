@@ -32,6 +32,12 @@
 	viewQuestions();
 	break;
 
+	case 11;
+	setQuiz();
+	break;
+
+	
+
 	default:
 		# code...
 		break;
@@ -229,6 +235,55 @@ function viewQnA(){
 		  //$qno = $_REQUEST["ques"];
 		
 		if ($row=$obj->selectChildren())
+		{
+			echo '{"result":1, "message":[';
+		    while ($row)
+		{
+		 echo json_encode($row);
+			
+			 $row = $obj->fetch (); 
+			if ($row){
+				echo ",";
+			}
+		}
+			echo "]}";
+		}
+		else{
+		echo '{"result":0, "message":"not display"}';
+		}
+		}
+
+		function setQuiz(){
+			include("function.php");
+			 $obj=new e_class();
+
+			$quizType=$_REQUEST['quizType'];
+			$quizTime=$_REQUEST['quizTime'];
+			$subject=$_REQUEST['subject'];
+			$class=$_REQUEST['sClass'];
+			$dueDate=$_REQUEST['dueDate'];
+			$tName=$_REQUEST['tName'];
+			$comment=$_REQUEST['comment'];
+
+			if(!$obj->setQuiz($quizType,$quizTime,$subject,$class,$dueDate,$tName,$comment)){
+
+             echo '{"result": 0, "message": "answer was not added"}';
+	         return;
+
+			}
+			echo '{"result": 1, "message": "answer was added successfully"}';
+
+           return;
+		}
+
+		function setQuizDisplay(){
+
+		  include("function.php");
+		  $obj=new e_class();
+
+		  //$qno = $_REQUEST["ques"];
+		
+		if ($row=$obj->displaySetQuiz())
 		{
 			echo '{"result":1, "message":[';
 		    while ($row)

@@ -137,6 +137,25 @@ class e_class extends adb{
    	 return $this->fetch();
 
    }
+
+   function setQuiz($subject,$quizType,$quizTime,$dueDate,$teacherName,$comment,$class){
+     $insert="INSERT INTO quizTable SET subject='$subject',quizType='$quizType',quizTime='$quizTime',dueDate=
+     '$dueDate',teacherName='teacherName',comment='comment',studClass='$class' ";
+     if(!$this->query($insert)){
+			echo "cannot insert";
+		}
+		return $this->query($insert);
+
+   }
+   function displaySetQuiz(){
+       $select="SELECT * FROM ";
+   	 if(!$this->query($select)){
+   		echo "cannot select";
+   		echo mysql_error();
+   	}
+   	 return $this->fetch();
+
+   }
 }
 
 ?>

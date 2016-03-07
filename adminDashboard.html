@@ -8,35 +8,8 @@
   <script src="jquery-1.12.0.min.js"></script>
    <script src="js/bootstrap.min.js"></script>
    <script type="text/javascript">
-      function sendRequest(u){
-                
-                var obj=$.ajax({url:u,async:false});
-                
-                var result=$.parseJSON(obj.responseText);
-                
-                return result;  
-                
-            }
-             function addUsers(){
-                var Name=$('#Name').val();
-                var email=$('#email').val();
-                var password=$('#password').val();
-                var contact=$('#contact').val();
-                var role=$('#role').val();
 
-                var url="controller.php?cmd=1&Name="+Name+"&email="+email+"&password="+password+"&contact="+contact+"&role="+role;
-                prompt("u",url);
-                var getResult= sendRequest(url);
-                prompt("u",url);
-                   if(getResult.result==0){
-                    alert(getResult.message);
-
-                   }
-                   else{
-                    alert(getResult.message);
-                   }
-       
-        }
+            
    </script>
    
   
@@ -48,7 +21,7 @@
         <a class="navbar-brand" href="#" color="white">E-class</a>
        </div>
       <ul class="nav navbar-nav">
-        <li class=""><a href="#">Dashboard</a></li>
+        <li class=""><a href="adminDashboard.html">Dashboard</a></li>
         <li><a href="#">Page 1</a></li>
         <li><a href="#">Page 2</a></li> 
         <li><a href="#">Page 3</a></li>
@@ -63,6 +36,7 @@
       <div class="row">
 		  <div class="col-sm-3">first column</div>
 		  <div class="col-sm-6" style="backgroud-color:white" id="display">middle
+        <h2>Let's Get Started<h2>
        
 		  </div>
 		  <div class="col-sm-3">last</div>

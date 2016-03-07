@@ -1,0 +1,110 @@
+            <!Doctype html>
+            <html>
+            <head>
+             <title></title>
+             <link rel="stylesheet" href="css/bootstrap.min.css">
+             <link rel="stylesheet" href="style.css">
+             <meta name="viewport" content="width=device-width, initial-scale=1">
+
+             <script type="text/javascript">
+             var count=15;
+             var id=1;
+             var qId=0;
+             var answer=2;
+             var ans;
+             
+              
+              
+                function sendRequest(u){
+                  var obj = $.ajax({url:u, async:false});
+
+                  var result = $.parseJSON(obj.responseText);
+
+                  return result;
+                }
+                function setQuiz(){
+
+                  var quizType= $("#quizType").val();
+                  var quizTime= $("#quizTime").val();
+                  var subject= $("#subject").val();
+                  var dueDate= $("#dueDate").val();
+                  var tName= $("#tName").val();
+                  var comment= $("#comment").val();
+                  var sClass=$("#class").val();
+
+                  var url="controller.php?cmd=11& quizType="+quizType+"&quizTime="+quizTime+"&subject="+subject+"&dueDate="+
+                  dueDate+"&tName="+tName+"&comment="+comment+"&sClass="+sClass;
+
+                  sendRequest(url);
+
+
+                }
+ 
+ 
+    
+
+
+
+
+                   </script>
+
+
+                    </head>
+                    <body >
+                     <nav class="navbar navbar-default" style="backgroud-color:#33ccff;" >
+                      <div class="container-fluid">
+                       <div class="navbar-header">
+                        <a class="navbar-brand" href="#">E-class</a>
+                      </div>
+                      <ul class="nav navbar-nav">
+                        <li class=""><a href="teacherDashboard.html">Dashboard</a></li>
+                        
+                      </ul>
+                    </div>
+                  </nav>
+
+                  <div class="container">
+                   <div class="jumbotron" style="backgroud-color:black;">
+
+                    <div class="row">
+                      <div class="col-sm-3"></div>
+                      <div class="col-sm-6" style="backgroud-color:white" id="display_">
+
+                     
+                     <div class"form-group"><lable></lable>
+                      <input type="text" width="100" class="form-control" name="quizType" id="quizType" placeholder="Quiz Type e.g Topic quiz 1"><br/>
+                     <input type="text" width="100" class="form-control" name="subject" id="subject" placeholder="subject"><br/>
+                     <input type="text" width="100" class="form-control" name="quizTime" id="quizTime" placeholder="quiz time. writ N/A if quiz is not timed"><br/> 
+                     <input type="text" width="100" class="form-control" name="dueDate" id="dueDate" placeholder="due date"><br/>
+                     <input type="text" width="100" class="form-control" name="tName" id="tName" placeholder="Teacher's name"><br/> 
+                     <input type="text" width="100" class="form-control" name="comment" id="comment" placeholder="comment e.g topic quiz 1 is due on..."><br/>
+                     <input type="text" width="100" class="form-control" name="class" id="class" placeholder="class"><br/>
+                     
+
+                   
+                    
+                   
+                   
+
+                  </div>
+                </div>
+                <div class="col-sm-6" style="backgroud-color:white" id="view_">
+
+                </div>
+                
+                  
+                </div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-6"> <div  id="add"></div>
+                <div class="col-sm-3"></div>
+               
+              </div>
+             </div>
+
+
+          </div>
+          <script src="js/jquery-1.12.0.min.js"></script>
+          <script src="js/bootstrap.min.js"></script>
+        </body>
+
+        </html>
