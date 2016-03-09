@@ -36,7 +36,13 @@
 	setQuiz();
 	break;
 
-	
+	case 12;
+	setQuizDisplay();
+	break;
+
+	case 13;
+	insertRecord();
+	break;
 
 	default:
 		# code...
@@ -140,8 +146,9 @@ function addQuestions(){
 	$answer=$_REQUEST['answer'];
 	$class=$_REQUEST['class'];
 	$subject=$_REQUEST['subject'];
+	$quizType=$_REQUEST['quizType'];
 
-	if(!$add->questions($question,$answer,$questionType,$teacherId,$class,$subject)){
+	if(!$add->questions($question,$answer,$questionType,$teacherId,$class,$subject,$quizType)){
 	echo '{"result": 0, "message": "Question was not added"}';
 	return;
 }
@@ -278,29 +285,80 @@ function viewQnA(){
 
 		function setQuizDisplay(){
 
-		  include("function.php");
-		  $obj=new e_class();
+				  include("function.php");
+				  $obj=new e_class();
 
-		  //$qno = $_REQUEST["ques"];
-		
-		if ($row=$obj->displaySetQuiz())
-		{
-			echo '{"result":1, "message":[';
-		    while ($row)
-		{
-		 echo json_encode($row);
-			
-			 $row = $obj->fetch (); 
-			if ($row){
-				echo ",";
+				  //$qno = $_REQUEST["ques"];
+				
+				if ($row=$obj->displaySetQuiz())
+				{
+					echo '{"result":1, "message":[';
+				    while ($row)
+				{
+				 echo json_encode($row);
+					
+					 $row = $obj->fetch (); 
+					if ($row){
+						echo ",";
+					}
+				}
+					echo "]}";
+				}
+				else{
+				echo '{"result":0, "message":"not display"}';
+				}
+		}
+		function insertRecord(){
+			include("function.php");
+		    $obj=new e_class();
+			$subject=$_REQUEST['subjects'];
+			$class=$_REQUEST['theclass'];
+			$score=$_REQUEST['score'];
+			$outOf=$_REQUEST['outOf'];
+			$quizType=$_REQUEST['quizType'];
+			$teacherName=$_REQUEST['teacherName'];
+
+			if(!$obj->record($subject,$class,$score,$outOf,$quizType,$teacherName)){
+				echo mysql_error();
+
+             echo '{"result": 0, "message": "record was not added"}';
+	         return;
+
 			}
+			echo '{"result": 1, "message": "record was added successfully"}';
+
+           return;
 		}
-			echo "]}";
+
+
+		
+
+		function recordsDisplay(){
+
+				  include("function.php");
+				  $obj=new e_class();
+
+				  //$qno = $_REQUEST["ques"];
+				
+				if ($row=$obj->selectRecord())
+				{
+					echo '{"result":1, "message":[';
+				    while ($row)
+				{
+				 echo json_encode($row);
+					
+					 $row = $obj->fetch (); 
+					if ($row){
+						echo ",";
+					}
+				}
+					echo "]}";
+				}
+				else{
+				echo '{"result":0, "message":"not display"}';
+				}
 		}
-		else{
-		echo '{"result":0, "message":"not display"}';
-		}
-		}
+
 
 
 

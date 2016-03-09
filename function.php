@@ -51,9 +51,9 @@ class e_class extends adb{
 		}
 		return $this->query($insert);
 	}
-	function questions($question,$answer,$questionType,$teacherId,$class,$subject){
+	function questions($question,$answer,$questionType,$teacherId,$class,$subject,$quizType){
 		$insert="INSERT INTO questions set question ='$question',answer='$answer',teacherId=
-		'$teacherId',questionType='$questionType',subject='$subject',class='$class'";
+		'$teacherId',questionType='$questionType',subject='$subject',class='$class',quizType='$quizType'";
 		
 		return $this->query($insert);
 	}
@@ -138,17 +138,16 @@ class e_class extends adb{
 
    }
 
-   function setQuiz($subject,$quizType,$quizTime,$dueDate,$teacherName,$comment,$class){
+   function setQuiz($quizType,$quizTime,$subject,$class,$dueDate,$teacherName,$comment){
      $insert="INSERT INTO quizTable SET subject='$subject',quizType='$quizType',quizTime='$quizTime',dueDate=
-     '$dueDate',teacherName='teacherName',comment='comment',studClass='$class' ";
-     if(!$this->query($insert)){
-			echo "cannot insert";
-		}
+     '$dueDate',teacherName='$teacherName',comment='$comment',theclass='$class' ";
+     
 		return $this->query($insert);
 
    }
    function displaySetQuiz(){
-       $select="SELECT * FROM ";
+      $select="SELECT DISTINCT  questions.quizType,quizTable.quizType,quizTable.subject,quizTable.teacherName,
+      quizTable.theclass,quizTable.quizTime FROM questions,quizTable WHERE questions.quizType=quizTable.quizType";
    	 if(!$this->query($select)){
    		echo "cannot select";
    		echo mysql_error();
@@ -156,6 +155,18 @@ class e_class extends adb{
    	 return $this->fetch();
 
    }
+  function record($subject,$class,$score,$outOf,$quizType,$teacherName){
+  	$insert="INSERT INTO submission SET subject='$subject',studentClass='$class', score='$score',
+  	outOf='$outOf',quizType='$quizType',teacherName='$teacherName'";
+  	return $this->query($insert);
+  }
+  function selectRecord(){
+
+  	$select="SELECT * FROM submission";
+  	return $this->fetch();
+  	
+
+  }
 }
 
 ?>

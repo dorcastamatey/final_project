@@ -42,67 +42,84 @@ function grade(){
 }
 
 function display(){
-  grade();
+        grade();
+        setTimer();
 
-  if(pos==quesNum){
-    remove_div('quiz');
-      show('review')
+        if(pos==quesNum&&quizTime!=0){
 
-    
-    reviewTest();
-  }
-     
- else{
-     var url="controller.php?cmd=9&ques="+Qno;
-
-     var display =sendRequest(url);
-
-     num=display.message.length;//
-
-    var queston = display.message[0].question;
-    var  displayQuestions=document.getElementById("quiz");
-    displayQuestions.innerHTML=displayQuestions.innerHTML=queston;
-
-
-     for(var i=1; i<num; i++){
-      if(display.message[i].question == queston){
-        //console.log(display.message[i].answer);
-        displayQuestions.innerHTML=displayQuestions.innerHTML+'<div class="radio"> <label><input type="radio"  name="multiple" value="'+display.message[i].answer+'">'+display.message[i].answer+'</label></div>';        
-      }
-    }
-
-    displayQuestions.innerHTML=displayQuestions.innerHTML+'<button type="button" class="btn btn-default" name="submit" onclick="quizAnswer()"> submit</button>';
-    document.getElementById("status").innerHTML="Question "+(pos+1)+ " of " +quesNum;
-
-
-
+            records(); 
+            remove_div('quiz');
+            show('review');
+            reviewTest();
+        }
+        else if(pos!=quesNum&&quizTime==0){
+               var  displayQuestions=document.getElementById("review");
+               displayQuestions.innerHTML=displayQuestions.innerHTML+"your time is up";
+               records(); 
+               remove_div('quiz');
+               show('review');
+                reviewTest();
+        }
+        else if(pos==quesNum&&quizTime==0){
+                records(); 
+                remove_div('quiz');
+                show('review');
+               reviewTest();
+        }
+           
+       else{
+          getQnA();
+          
   }
 }
-  function quizAnswer(){
-    grade();
-    
-    
-     choices=document.getElementsByName("multiple");
-     for(ans=0; ans<choices.length;ans++){
-      if(choices[ans].checked){
-        choices=choices[ans].value;
-        yourAns[count]=choices; 
-        //alert(choices);
+  function getQnA(){
+          var url="controller.php?cmd=9&ques="+Qno;
 
-      }
-     }
-     if(choices==answers[count]){
-         
-         correct++; 
-          
-          //alert(questions[count]);
+           var display =sendRequest(url);
 
-      }
-     pos++;
-     Qno++;
-     count++;
-    display();
+           num=display.message.length;//
+
+          var queston = display.message[0].question;
+          var  displayQuestions=document.getElementById("quiz");
+          displayQuestions.innerHTML=displayQuestions.innerHTML=queston;
+
+
+           for(var i=1; i<num; i++){
+            if(display.message[i].question == queston){
+              //console.log(display.message[i].answer);
+              displayQuestions.innerHTML=displayQuestions.innerHTML+'<div class="radio"> <label><input type="radio"  name="multiple" value="'+display.message[i].answer+'">'+display.message[i].answer+'</label></div>';        
+            }
+          }
+
+          displayQuestions.innerHTML=displayQuestions.innerHTML+'<button type="button" class="btn btn-default" name="submit" onclick="quizAnswer()"> submit</button>';
+          document.getElementById("status").innerHTML="Question "+(pos+1)+ " of " +quesNum;
+
   }
+  function quizAnswer(){
+            grade();
+            
+            
+             choices=document.getElementsByName("multiple");
+             for(ans=0; ans<choices.length;ans++){
+              if(choices[ans].checked){
+                choices=choices[ans].value;
+                yourAns[count]=choices; 
+                //alert(choices);
+
+              }
+             }
+             if(choices==answers[count]){
+                 
+                 correct++; 
+                  
+                  //alert(questions[count]);
+
+              }
+             pos++;
+             Qno++;
+             count++;
+            display();
+          }
   function reviewTest(){
           grade();
           var  displayQuestions=document.getElementById("review");
@@ -110,7 +127,7 @@ function display(){
           displayQuestions.innerHTML=displayQuestions.innerHTML+"<strong>Quiz review</strong>";
 
           for(var QnA=0;QnA<=quesNum;QnA++){
-            alert("");
+            //alert("");
             var ques=questions[QnA];
             var ans =answers[QnA];
             var yourAnswer=yourAns[QnA];
@@ -126,11 +143,11 @@ function display(){
 
    function remove_div() {
 
-          for (var i = 0; i < arguments.length; i++) {
+            for (var i = 0; i < arguments.length; i++) {
 
-            var input = arguments[i];
-            $('#' + input).addClass('hide'); 
-          }
+              var input = arguments[i];
+              $('#' + input).addClass('hide'); 
+            }
 
     }
 
@@ -145,11 +162,49 @@ function display(){
 
 
     }
+       var theclass;
+       var subjects;
+        var quizType;
+        var teacherName;
+        var score;
+        var outOf;
+       
+    function records(){
+          var url="controller.php?cmd=12";
+          var record=sendRequest(url);
+          var recordLength=record.message.length;
+          for(var rec=0; rec<=record.message.length; rec++){
+            
+            theclass=record.message[rec].theclass;
+             subjects=record.message[rec].subject;
+             quizType=record.message[rec].quizType;
+             teacherName=record.message[rec].teacherName;
+            alert(subjects);
+              score=correct;
+              outOf=quesNum;
+              quizTime=record.message[rec].quizTime;
 
-    function setQuiz(){
+            
+            var theUrl="controller.php?cmd=13 &subjects="+subjects+"&theclass="+theclass+"&score="+score+"&outOf="+outOf+"&quizType="+quizType+"&teacherName="+teacherName;
+            prompt("u",theUrl);
+            sendRequest(theUrl);
 
-      
+          }          
     }
+
+    function setTimer(){
+          var url="controller.php?cmd=12";
+          var record=sendRequest(url);
+          for(var rec=0; rec<=record.message.length; rec++){
+            var quizTime=record.message[rec].quizTime;
+         }
+          var  displayQuestions=document.getElementById("quiz");
+          displayQuestions.innerHTML=displayQuestions.innerHTML=+"you have " +quizTime+ "left";
+          quizTime--;
+          var timer=setTimeout(setTimer(),1000);        
+
+    }
+
 
 
 
