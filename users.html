@@ -3,6 +3,7 @@
   <head>
    <title></title>
    <link rel="stylesheet" href="css/bootstrap.min.css">
+   <link rel="stylesheet" href="style.css">
    <meta name="viewport" content="width=device-width, initial-scale=1">
   <script src="jquery-1.12.0.min.js"></script>
    <script src="js/bootstrap.min.js"></script>
@@ -17,6 +18,9 @@
                 
             }
              function addUsers(){
+
+        function addUsers(){
+
                 var Name=$('#Name').val();
                 var email=$('#email').val();
                 var password=$('#password').val();
@@ -36,6 +40,7 @@
                    }
        
         }
+
    </script>
    
   
@@ -44,7 +49,7 @@
    <nav class="navbar navbar-inverse">
       <div class="container-fluid">
        <div class="navbar-header">
-        <a class="navbar-brand" href="#">WebSiteName</a>
+        <a class="navbar-brand" href="#">E-class</a>
        </div>
       <ul class="nav navbar-nav">
         <li class="active"><a href="#">Home</a></li>
@@ -52,7 +57,12 @@
         <li><a href="#">Page 2</a></li> 
         <li><a href="#">Page 3</a></li> 
       </ul>
-    </div>
+
+        </script>
+        
+    </head>
+    <body>
+    
 </nav>
 
    <div class="container">
@@ -77,9 +87,15 @@
                 <div class="form-group">
                   <input type="text" name="contact" id="contact" placeholder="contact" class="form-control">
                 </div>
+
        
       <button type="button" class="btn btn-default" name="submit" onclick="questions()"> submit</button><br/>
                  
+
+                <input name="Submit"type="submit" class="button" value="Submit" onclick="addUsers()" /> 
+              
+              
+
             </div>
 		  </div>
 		  <div class="col-sm-3">last</div>

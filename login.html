@@ -3,11 +3,12 @@
   <head>
    <title></title>
    <link rel="stylesheet" href="css/bootstrap.min.css">
+   <link rel="stylesheet" href="style.css">
    <meta name="viewport" content="width=device-width, initial-scale=1">
-  <script src="jquery-1.12.0.min.js"></script>
-   <script src="js/bootstrap.min.js"></script>
+  
    <script type="text/javascript">
-      function sendRequest(u){
+    function sendRequest(u){
+
                 
                 var obj=$.ajax({url:u,async:false});
                 
@@ -16,15 +17,36 @@
                 return result;  
                 
             }
+
          function login(){
                 var email=$('#email').val();
                 var password=$('#password').val();
                
 
-                var url="controller.php?cmd=1&email="+email+"&password="+password+;
-                prompt("u",url);
-                var result=sendRequest(url);
-                prompt("u",result);
+                var url="controller.php?cmd=14&email="+email+"&password="+password;
+                // prompt("u",url);
+                var display =sendRequest(url);
+
+               
+                for(var log=0; log<=display.message.length; log++){
+                  alert(display.message.length);
+
+                if(display.message[log].role=="parent"){
+                  window.location.href="parentDashboard.html";
+                }
+                else if(display.message[log].role=="teacher"){
+                  window.location.href="teacherDashboard.html";
+
+                }
+                 else if(display.message[log].role=="student"){
+                  window.location.href="teacherDashboard.html";
+
+                }
+                else 
+                  window.location.href="adminDashboard.html";
+              }
+
+                //prompt("u",result);
             }
      
    </script>
@@ -32,44 +54,45 @@
   
   </head>
   <body>
-   <nav class="navbar navbar-inverse">
+   <nav class="navbar navbar-default">
       <div class="container-fluid">
        <div class="navbar-header">
-        <a class="navbar-brand" href="#">WebSiteName</a>
+        <a class="navbar-brand" href="#">E-class</a>
        </div>
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Page 1</a></li>
-        <li><a href="#">Page 2</a></li> 
-        <li><a href="#">Page 3</a></li> 
+        <li class=""><a href="index.html">Dashboard</a></li>
+        
       </ul>
     </div>
 </nav>
 
-     <div class="container">
-     <div class="jumbotron" style="backgroud-color:black;">
+   <div class="container">
+   <div class="jumbotron" style="backgroud-color:black;">
 
       <div class="row">
-		       <div class="col-sm-3">first column</div>
-		       <div class="col-sm-6" style="backgroud-color:white" id="display">middle
-                 <div class="form-group">
+		  <div class="col-sm-3"></div>
+		  <div class="col-sm-6" style="backgroud-color:white" id="display">
+                
+                <div class="form-group">
                   <input type="email" name="email" id="email" placeholder="Email" class="form-control">
                 </div>
                 
                 <div class="form-group">
                   <input type="password" name="password" id="password" placeholder="Password" class="form-control">
                 </div>
-              <button type="button" class="btn btn-default" name="submit" onclick="questions()"> submit</button><br/>
+               
+      <button type="button" class="btn btn-default" name="submit" onclick="login()"> submit</button><br/>
                  
       </div>
 		  </div>
-		  <div class="col-sm-3">last</div>
+		  <div class="col-sm-3"></div>
     </div>
     
    	 </div>
 
 
-
+ <script src="js/jquery-1.12.0.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
 
   </body>
 
