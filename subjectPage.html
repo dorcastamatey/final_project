@@ -3,29 +3,51 @@
   <head>
    <title></title>
    <link rel="stylesheet" href="css/bootstrap.min.css">
-   <link rel="stylesheet" href="style.css">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="style.css">
- 
+  
    <script type="text/javascript">
-    
-   </script>
+     function sendRequest(u){
+      var obj = $.ajax({url:u, async:false});
+
+      var result = $.parseJSON(obj.responseText);
+
+      return result;
+}
+     function viewCourses(){
+
+      var url="controller.php?cmd=18";
+      //prompt("h",url);
+      var display=sendRequest(url);
+      var num=display.message.length;
+      //var c=display.message[0].Course;
+      //alert(c);
+      var  displayQuestions=document.getElementById("display");
+
+      for(var count=1; count<num; count++){
+        var course=display.message[count].Course;
+        displayQuestions.innerHTML=displayQuestions.innerHTML+course+"<br/>";
+
+      }
+     }
+  
+ </script>
    
   
   </head>
-  <body>
+  <body onload="viewCourses()">
    <nav class="navbar navbar-default" style="backgroud-color:#33ccff;" >
       <div class="container-fluid">
        <div class="navbar-header">
         <a class="navbar-brand" href="#" color="white">E-class</a>
        </div>
       <ul class="nav navbar-nav">
-        <li class=""><a href="#">Dashboard</a></li>
-        <li><a href="student.html">Add students</a></li>
-        <li><a href="quiz.html">Add Questions</a></li> 
-        <li><a href="#">View Quiz</a></li>
-        <li><a href="setQuiz.html">Set Quiz</a></li>
-
+        <li class=""><a href="subjectPage.html">Dashboard</a></li>
+        <li><a href="">Send a message</a></li>
+        <li><a href=""> All students</a></li> 
+        <li><a href="#"> previous quiz</a></li>
+        <li><a href="#">Records</a></li>
+        
       </ul>
     </div>
 </nav>
@@ -35,22 +57,17 @@
 
       <div class="row">
 		  <div class="col-sm-3">
-        <div class="page-header"><h4>Students</h4></div>
-       <p><h5> Maku Tamatey<h5></p>
-       <p><h5> Derick Odonkor<h5></p>
-       <p><h5> Benson Wachira<h5></p>
-       <p><h5> Obed Nsiah<h5></p>
+        
+      
 
       </div>
 		  <div class="col-sm-6" style="backgroud-color:white" id="display">
-        <div class="page-header"><h4>Time table</h4></div>
-       
+        <h4>Subjects</h4>
+
+        
 		  </div>
 		  <div class="col-sm-3">
-       <div class="page-header"><h5>History and Notifications</h5></div>
-        <p><h5> you set a quiz two days ago<h5></p>
-         <p><h5> Mrs Akoto sent you a message<h5></p>
-
+      
       </div>
     </div>
     <div class="col-sm-3"></div>

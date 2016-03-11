@@ -23,11 +23,11 @@
 
        var url="controller.php?cmd=15";
        var display=sendRequest(url);
-       prompt("e",display);
+       //prompt("e",display);
 
        var table=document.getElementById("theTable");
        var myrow=table.rows.length;
-       for(var count=1; count<=display.message.length; count++){
+       for(var count=1; count<display.message.length; count++){
        var row=table.insertRow(myrow);
        var cell1=row.insertCell(0);
        var cell2=row.insertCell(1);
@@ -58,7 +58,7 @@
         <a class="navbar-brand" href="#" color="white">E-class</a>
        </div>
       <ul class="nav navbar-nav">
-        <li class=""><a href="adminDashboard.html">Dashboard</a></li>
+        <li class=""><a href="studentDashboard.html">Dashboard</a></li>
         <li><a href="#">Page 1</a></li>
         <li><a href="#">Page 2</a></li> 
         <li><a href="#">Page 3</a></li>

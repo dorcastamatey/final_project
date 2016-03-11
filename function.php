@@ -128,7 +128,7 @@ class e_class extends adb{
    	  return $this->fetch();
    }
    function selectChildren($email){
-   	 $select="SELECT child'sName, child'sId FROM parents where email='$email'";
+   	 $select="SELECT childsName, childsId FROM parents where email='$email'";
    	 if(!$this->query($select)){
    		echo "cannot select";
    		echo mysql_error();
@@ -145,8 +145,8 @@ class e_class extends adb{
 
    }
    function displaySetQuiz(){
-      $select="SELECT DISTINCT  questions.quizType,quizTable.quizType,quizTable.subject,quizTable.teacherName,
-      quizTable.theclass,quizTable.quizTime FROM questions,quizTable WHERE questions.quizType=quizTable.quizType";
+      $select="SELECT DISTINCT  quizTable.quizType,quizTable.subject,quizTable.teacherName,
+      quizTable.theclass,quizTable.quizTime FROM questions,quizTable WHERE questions.quizNum=quizTable.quizNum";
    	 if(!$this->query($select)){
    		echo "cannot select";
    		echo mysql_error();
@@ -159,13 +159,22 @@ class e_class extends adb{
   	outOf='$outOf',quizType='$quizType',teacherName='$teacherName'";
   	return $this->query($insert);
   }
-  function selectRecord(){
+  function selectRecord($id){
 
-  	$select="SELECT * FROM submission ";
+  	$select="SELECT * FROM submission Where studentId='$id' ";
   	return $this->query($select);
   	
 
   }
+
+   function studentCourses(){
+   	  $select="SELECT * FROM students";
+   	  if(!$this->query($select)){
+   		echo "cannot select";
+   		echo mysql_error();
+   	}
+   	  return $this->query($select);
+   }
   function loginStudent($email,$password){
   	$login=" SELECT * FROM students  WHERE email='$email' AND password='$password'";
 return $this->query($login);

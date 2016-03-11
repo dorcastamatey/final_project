@@ -122,6 +122,7 @@ function display(){
              Qno++;
              count++;
             display();
+            //setTimer();
           }
   function reviewTest(){
           grade();
@@ -182,32 +183,81 @@ function display(){
           subjects=record.message[rec].subject;
           quizType=record.message[rec].quizType;
           teacherName=record.message[rec].teacherName;
-            alert(subjects);
+            //alert(subjects);
               score=correct;
               outOf=quesNum;
               quizTime=record.message[rec].quizTime;
 
             
             var theUrl="controller.php?cmd=13 &subjects="+subjects+"&theclass="+theclass+"&score="+score+"&outOf="+outOf+"&quizType="+quizType+"&teacherName="+teacherName;
-            prompt("u",theUrl);
+            //prompt("u",theUrl);
             sendRequest(theUrl);
 
           }          
     }
 
-    function setTimer(){
-          var url="controller.php?cmd=12";
-          var record=sendRequest(url);
-          //for(var rec=0; rec<record.message.length; rec++){
-            //alert(record.message[rec].quizTime);
-            var quizTimes=record.message[0].quizTime;
-         //}
-          var  displayQuestions=document.getElementById("quiz");
-          displayQuestions.innerHTML=displayQuestions.innerHTML=+"you have " +quizTimes+ "left";
-          quizTimes--;
-          var timer=setTimeout(setTimer(),1000);        
+    //function setTimer(){
 
-    }
+  //         var url="controller.php?cmd=12";
+  //         var record=sendRequest(url);
+  //         var num=record.message.length;
+          
+  //           quizTimes=record.message[0].quizTime;
+  //           quizTypes=record.message[0].quizType;
+  //           //alert(quizTypes);
+  //           if(quizTypes=="timed"){
+  //             grade();
+              
+
+  //           var timeLeft=quizTimes-countTime;
+  //           var  displayQuestions=document.getElementById("timer");
+          
+  //          displayQuestions.innerHTML=displayQuestions.innerHTML="you have " + timeLeft+ "  left" ;
+  //         if(timeLeft==0 ){
+
+  //             clearTimeout(timer);
+  //               records(); 
+  //               remove_div('quiz');
+  //               show('review');
+  //               remove_div("timer")
+  //              reviewTest();
+  //              clearTimeout(timer);
+  //         }
+  //         else if (pos==quesNum){
+  //                clearTimeout(timer);
+  //                records(); 
+  //                remove_div('quiz');  
+  //                show('review');
+  //                reviewTest();
+  //                clearTimeout(timer);
+  //       }
+        
+  //       else {
+  //             getQnA();
+
+  //       }
+
+  //         countTime++;
+  //         var timer=setTimeout('setTimer()',1000);  
+  //    }
+  //    else{
+  //             if(pos==quesNum){
+  //               records(); 
+  //               remove_div('quiz');
+  //               show('review');
+  //              reviewTest();
+  //       }
+           
+  //      else{
+  //         getQnA();
+          
+  // }
+
+
+  //    }
+
+  //   }
+
 
 
 
@@ -243,6 +293,7 @@ function display(){
 
       <div class="col-sm-6" style="backgroud-color:white" id="display_" >
            <font color="black">
+            <div id="timer" class="col-sm-6" ></div>
              <div id ="quiz" class="col-sm-6" >
 
               </div>

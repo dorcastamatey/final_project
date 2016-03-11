@@ -50,11 +50,22 @@
  	case 15;
  	recordsDisplay();
  	break;
+ 	case 16;
+ 	addParents();
+ 	break;
+ 	case 17;
+ 	viewChildren();
+ 	break;
+ 	case 18;
+ 	viewCoursesAndMates();
+ 	break; 
 
  	default:
 		# code...
  	break;
  }
+
+
  function addusers(){
  	include("function.php");
  	$add=new e_class();
@@ -153,6 +164,7 @@
  		echo '{"result":1, "message":[';
  		while ($row)
  		{
+ 			$_SESSION['emailStudent']=$row['email'];
  			echo json_encode($row);
 
  			$row = $add->fetch(); 
@@ -169,6 +181,8 @@
  		echo '{"result":1, "message":[';
  		while ($row2)
  		{
+ 			$_SESSION['emailParent']=$row2['email'];
+ 			@$_SESSION['studentId']=$row2['StudentId'];
  			echo json_encode($row2);
 
  			$row2 = $add->fetch (); 
@@ -185,8 +199,9 @@
  	if ($row3) {
  		
  		echo '{"result":1, "message":[';
- 		while ($row3)
- 		{
+ 		while ($row3){
+ 			$_SESSION['emailUser']=$row3['email'];
+ 		
  			echo json_encode($row3);
 
  			$row3 = $add->fetch (); 
@@ -320,9 +335,9 @@
  		include("function.php");
  		$obj=new e_class();
 
-		  //$qno = $_REQUEST["ques"];
+		 $email=$_SESSION['emailParent'];
 
- 		if ($row=$obj->selectChildren())
+ 		if ($row=$obj->selectChildren($email))
  		{
  			echo '{"result":1, "message":[';
  			while ($row)
@@ -419,9 +434,10 @@
  		include("function.php");
  		$obj=new e_class();
 
-				  //$qno = $_REQUEST["ques"];
+			  //$qno = $_REQUEST["ques"];
+ 		$id=@$_SESSION['studentId'];
 
- 		if ($row=$obj->selectRecord())
+ 		if ($row=$obj->selectRecord($id))
  		{
  			echo '{"result":1, "message":[';
  			while ($row)
@@ -434,6 +450,35 @@
  				}
  			}
  			echo "]}";
+ 			return;
+ 		}
+ 		else{
+ 			echo '{"result":0, "message":"not display"}';
+ 			return;
+ 		}
+ 	}
+
+ 	function viewCoursesAndMates(){
+
+ 		include("function.php");
+ 		$obj=new e_class();
+
+		  //$qno = $_REQUEST["ques"];
+
+ 		if ($row=$obj->studentCourses())
+ 		{
+ 			echo '{"result":1, "message":[';
+ 			while ($row)
+ 			{
+ 				echo json_encode($row);
+
+ 				$row = $obj->fetch (); 
+ 				if ($row){
+ 					echo ",";
+ 				}
+ 			}
+ 			echo "]}";
+ 			echo mysql_error();
  			return;
  		}
  		else{
