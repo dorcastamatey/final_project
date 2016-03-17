@@ -8,12 +8,38 @@
    <link rel="stylesheet" href="style.css">
  
    <script type="text/javascript">
+        function sendRequest(u){
+
+                
+                var obj=$.ajax({url:u,async:false});
+                
+                var result=$.parseJSON(obj.responseText);
+                
+                return result;  
+                
+            }
+      function viewStudent(){
+
+        var view="controller.php?cmd=23";
+        var display=sendRequest(view);
+        var num =display.message.length;
+        //alert(display.message[0].childsName);
+        var theList=document.getElementById("displayStudent");
+        for(var count=1; count<num; count++ ){
+          var students=display.message[count].studentName;
+          var studentId=display.message[count].studentId;
+          //alert(kid);
+
+          theList.innerHTML=theList.innerHTML+'<a href="parentRequest.html?studId='+studentId+'&name='+students+'">'+students+'</a><br>';
+
+        }
+      } 
     
    </script>
    
   
   </head>
-  <body>
+  <body onload='viewStudent()'>
    <nav class="navbar navbar-default" style="backgroud-color:#33ccff;" >
       <div class="container-fluid">
        <div class="navbar-header">
@@ -36,10 +62,10 @@
       <div class="row">
 		  <div class="col-sm-3">
         <div class="page-header"><h4>Students</h4></div>
-       <p><h5> Maku Tamatey<h5></p>
-       <p><h5> Derick Odonkor<h5></p>
-       <p><h5> Benson Wachira<h5></p>
-       <p><h5> Obed Nsiah<h5></p>
+       <p id="displayStudent">
+
+       </p>
+       
 
       </div>
 		  <div class="col-sm-6" style="backgroud-color:white" id="display">

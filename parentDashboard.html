@@ -23,12 +23,14 @@
         var view="controller.php?cmd=17";
         var display=sendRequest(view);
         var num =display.message.length;
-        alert(display.message[0].childsName);
+        //alert(display.message[0].childsName);
         var theList=document.getElementById("display");
         for(var count=0; count<num; count++ ){
           var kid=display.message[count].childsName;
-          alert(kid);
-          theList.innerHTML=theList.innerHTML+kid+ "<br/>";
+          var studentId=display.message[count].childsId;
+          //alert(kid);
+
+          theList.innerHTML=theList.innerHTML+'<a href="parentRequest.html?studId='+studentId+'&name='+kid+'">'+kid+'</a><br>';
 
         }
       }      
@@ -44,8 +46,8 @@
        </div>
       <ul class="nav navbar-nav">
         <li class=""><a href="parentDashboard.html">Dashboard</a></li>
-        <li><a href="#">profile</a></li>
-        <li><a href="#">Page 2</a></li> 
+        <li><a href="attendance.html">Take attendance</a></li>
+        <li><a href="#">profile</a></li> 
         <li><a href="#">Page 3</a></li>
         
       </ul>

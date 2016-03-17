@@ -121,7 +121,7 @@ function display(){
              pos++;
              Qno++;
              count++;
-            display();
+             display();
             //setTimer();
           }
   function reviewTest(){
@@ -195,68 +195,56 @@ function display(){
 
           }          
     }
+    var countTime=0;
+    // function setTimer(){
 
-    //function setTimer(){
-
-  //         var url="controller.php?cmd=12";
-  //         var record=sendRequest(url);
-  //         var num=record.message.length;
+    //       var url="controller.php?cmd=12";
+    //       var record=sendRequest(url);
+    //       var num=record.message.length;
           
-  //           quizTimes=record.message[0].quizTime;
-  //           quizTypes=record.message[0].quizType;
-  //           //alert(quizTypes);
-  //           if(quizTypes=="timed"){
-  //             grade();
+    //         quizTimes=record.message[1].quizTime;
+    //         quizTypes=record.message[1].quizType;
+    //         alert(quizTimes);
+           
               
 
-  //           var timeLeft=quizTimes-countTime;
-  //           var  displayQuestions=document.getElementById("timer");
+    //         var timeLeft=quizTimes-countTime;
+    //         var  displayQuestions=document.getElementById("timer");
           
-  //          displayQuestions.innerHTML=displayQuestions.innerHTML="you have " + timeLeft+ "  left" ;
-  //         if(timeLeft==0 ){
-
-  //             clearTimeout(timer);
-  //               records(); 
-  //               remove_div('quiz');
-  //               show('review');
-  //               remove_div("timer")
-  //              reviewTest();
-  //              clearTimeout(timer);
-  //         }
-  //         else if (pos==quesNum){
-  //                clearTimeout(timer);
-  //                records(); 
-  //                remove_div('quiz');  
-  //                show('review');
-  //                reviewTest();
-  //                clearTimeout(timer);
-  //       }
-        
-  //       else {
-  //             getQnA();
-
-  //       }
-
-  //         countTime++;
-  //         var timer=setTimeout('setTimer()',1000);  
-  //    }
-  //    else{
-  //             if(pos==quesNum){
-  //               records(); 
-  //               remove_div('quiz');
-  //               show('review');
-  //              reviewTest();
-  //       }
            
-  //      else{
-  //         getQnA();
-          
-  // }
+    //        if(quizTypes=="timed"){
+    //          displayQuestions.innerHTML=displayQuestions.innerHTML="you have " + timeLeft+ "  left" ;
 
+    //          if(timeLeft==0){
+    //           records(); 
+    //             remove_div('quiz');
+    //             show('review');
+    //            reviewTest();
 
-  //    }
+    //          }
+    //          else{
+    //         getQnA();
+    //        }
 
-  //   }
+    //       }
+    //      else{
+    //           if(pos==quesNum){
+    //             records(); 
+    //             remove_div('quiz');
+    //             show('review');
+    //            reviewTest();
+    //            }
+    //           else{
+    //                getQnA();
+    //                 }
+    //               }
+
+    //       countTime++;
+    //       var timer=setTimeout('setTimer()',1000);  
+    //  }
+     
+
+    
 
 
 

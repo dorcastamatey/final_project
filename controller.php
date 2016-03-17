@@ -58,7 +58,25 @@
  	break;
  	case 18;
  	viewCoursesAndMates();
+ 	break;
+ 	case 19;
+ 	viewTeacher();
+ 	break;
+ 	case 20;
+ 	insertAttendance();
  	break; 
+ 	case 21;
+ 	recordsDisplay1();
+ 	break;
+ 	case 22;
+ 	selectAttendance();
+ 	break;
+ 	case 23;
+ 	selectStudents();
+ 	break;
+ 	case 24;
+ 	chat();
+ 	break;
 
  	default:
 		# code...
@@ -216,6 +234,48 @@
  	return;
  }
 
+function insertAttendance(){
+	include("function.php");
+ 	$add=new e_class();
+ 	$email=$_SESSION['emailParent'];
+ 	$teacherName=$_REQUEST['attendance'];
+ 	$status=$_REQUEST['status'];
+ 	$date=date("y.m.d");
+ 	if(!$add->insertAttendance($teacherName,$status,$email,$date)){
+ 		echo '{"result": 0, "message": "attendance was not added"}';
+ 		echo mysql_error();
+ 		return;
+ 	}
+ 	echo '{"result": 1, "message": "attendance was added successfully"}';
+ 	return;
+
+
+}
+function selectAttendance(){
+	include("function.php");
+ 		$obj=new e_class();
+
+ 		//$qno = $_REQUEST["ques"];
+
+ 		if ($row=$obj->selectAttendance())
+ 		{
+ 			echo '{"result":1, "message":[';
+ 			while ($row)
+ 			{
+ 				echo json_encode($row);
+
+ 				$row = $obj->fetch (); 
+ 				if ($row){
+ 					echo ",";
+ 				}
+ 			}
+ 			echo "]}";
+ 		}
+ 		else{
+ 			echo '{"result":0, "message":"not display"}';
+ 		}
+ 	}
+
 
 
 
@@ -284,6 +344,32 @@
  		$qno = $_REQUEST["ques"];
 
  		if ($row=$obj->selectAnswers($qno))
+ 		{
+ 			echo '{"result":1, "message":[';
+ 			while ($row)
+ 			{
+ 				echo json_encode($row);
+
+ 				$row = $obj->fetch (); 
+ 				if ($row){
+ 					echo ",";
+ 				}
+ 			}
+ 			echo "]}";
+ 		}
+ 		else{
+ 			echo '{"result":0, "message":"not display"}';
+ 		}
+ 	}
+
+ 	function viewTeacher(){
+
+ 		include("function.php");
+ 		$obj=new e_class();
+
+ 		//$qno = $_REQUEST["ques"];
+
+ 		if ($row=$obj->selectTeacher())
  		{
  			echo '{"result":1, "message":[';
  			while ($row)
@@ -458,6 +544,35 @@
  		}
  	}
 
+ 	function recordsDisplay1(){
+
+ 		include("function.php");
+ 		$obj=new e_class();
+
+			  $id = $_REQUEST["id"];
+ 		//$id=@$_SESSION['studentId'];
+
+ 		if ($row=$obj->selectRecord($id))
+ 		{
+ 			echo '{"result":1, "message":[';
+ 			while ($row)
+ 			{
+ 				echo json_encode($row);
+
+ 				$row = $obj->fetch (); 
+ 				if ($row){
+ 					echo ",";
+ 				}
+ 			}
+ 			echo "]}";
+ 			return;
+ 		}
+ 		else{
+ 			echo '{"result":0, "message":"not display"}';
+ 			return;
+ 		}
+ 	}
+
  	function viewCoursesAndMates(){
 
  		include("function.php");
@@ -487,6 +602,60 @@
  		}
  	}
 
+ 	function selectStudents(){
+
+ 		include("function.php");
+ 		$obj=new e_class();
+
+		 $email=$_SESSION['emailUser'];
+
+ 		if ($row=$obj->selectStudents($email))
+ 		{
+ 			echo '{"result":1, "message":[';
+ 			while ($row)
+ 			{
+ 				echo json_encode($row);
+
+ 				$row = $obj->fetch (); 
+ 				if ($row){
+ 					echo ",";
+ 				}
+ 			}
+ 			echo "]}";
+ 		}
+ 		else{
+ 			echo '{"result":0, "message":"not display"}';
+ 		}
+
+
+ 	}
+    function chat(){
+
+ 		include("function.php");
+ 		$obj=new e_class();
+
+		 //$email=$_SESSION['emailUser'];
+
+ 		if ($row=$obj->chat())
+ 		{
+ 			echo '{"result":1, "message":[';
+ 			while ($row)
+ 			{
+ 				echo json_encode($row);
+
+ 				$row = $obj->fetch (); 
+ 				if ($row){
+ 					echo ",";
+ 				}
+ 			}
+ 			echo "]}";
+ 		}
+ 		else{
+ 			echo '{"result":0, "message":"not display"}';
+ 		}
+
+
+ 	}
 
 
 

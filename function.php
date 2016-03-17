@@ -75,8 +75,8 @@ class e_class extends adb{
 		}
 		return $this->query();
 	}
-	function selectStudents(){
-		$select="SELECT studentName,email,contact FROM students ";
+	function selectStudents($email){
+		$select="SELECT studentName,email,contact FROM students where teacherEmail='$email'";
 		if(!$this->query($select)){
 			echo "cannot select";
 			
@@ -85,13 +85,22 @@ class e_class extends adb{
 		return $this->query($select);
 	}
 	function selectTeacher(){
-		$select="SELECT name,email, contact FROM teacher";
+		$select="SELECT teacherName,email, contact,level FROM teacher";
 		if(!$this->query($select)){
 			echo "cannot insert";
 			echo mysql_error();
 			
 
 		}
+		return $this->query($select);
+	}
+	function insertAttendance($teacherName,$status,$email,$date){
+
+		$insert="INSERT INTO attendance set teacherName='$teacherName',AttendanceStatus='$status', email='$email',attendanceDate='$date'";
+		return $this->query($insert);
+	}
+	function selectAttendance(){
+		$select="SELECT * FROM attendance";
 		return $this->query($select);
 	}
 
@@ -187,6 +196,10 @@ return $this->query($login);
   function loginUser($email,$password){
   	$login=" SELECT * FROM users WHERE email='$email' AND password='$password'";
 return $this->query($login);
+  }
+  function chat($message,$sender,$recepient){
+  	     $insert="INSERT INTO chat set message='$message',sender='$sender',recepient='$recepient'";
+  	     return $this->query($insert);
   }
 }
 

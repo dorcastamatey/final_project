@@ -1,0 +1,114 @@
+<!Doctype html>
+<html>
+  <head>
+   <title></title>
+   <link rel="stylesheet" href="css/bootstrap.min.css">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="style.css">
+ 
+   <script type="text/javascript">
+
+      function sendRequest(u){
+
+                
+                var obj=$.ajax({url:u,async:false});
+                
+                var result=$.parseJSON(obj.responseText);
+                
+                return result;  
+                
+            }
+      function viewTeacher(){
+  
+        var view="controller.php?cmd=19";
+        var display=sendRequest(view);
+        var num =display.message.length;
+        prompt("u",view);
+        var $select=$("#teacher");
+        var theList=document.getElementById("teacher");
+        for(var count=1; count<num; count++ ){
+          var teacherName=display.message[count].teacherName;
+          var teacherClass=display.message[count].level;
+          //alert(kid);
+
+         $select.append('<option id ="" value='+teacherName+' '+teacherClass+' >'+teacherName+' '+teacherClass+'</option>');
+
+        }
+      } 
+
+      function insertAttendance(){
+
+        var attendance=document.getElementById("teacher");
+        var result=attendance.options[attendance.selectedIndex].value;
+        var status=document.getElementById("selectStatus");
+        var result2=status.options[status.selectedIndex].value;
+
+        var url="controller.php?cmd=20&attendance="+result+"&status="+result2;
+        prompt("e",url);
+         sendRequest(url);
+      }     
+   </script>
+   
+  
+  </head>
+  <body onload='viewTeacher()'>
+   <nav class="navbar navbar-default" style="backgroud-color:#33ccff;" >
+      <div class="container-fluid">
+       <div class="navbar-header">
+        <a class="navbar-brand" href="#" color="white">E-class</a>
+       </div>
+      <ul class="nav navbar-nav">
+        <li class=""><a href="parentDashboard.html">Dashboard</a></li>
+        <li><a href="#">profile</a></li>
+        <li><a href="#">Page 2</a></li> 
+        <li><a href="#">Page 3</a></li>
+        
+      </ul>
+    </div>
+</nav>
+
+   <div class="container">
+   <div class="jumbotron" style="backgroud-color:black;">
+
+      <div class="row">
+		  <div class="col-sm-3"></div>
+		  <div class="col-sm-6" style="backgroud-color:white" id="display">
+        <font color="black">
+        <select id="teacher">
+        <option value=" ">Select Teacher</option>
+
+        </select>
+      </font>
+        
+       
+		  </div>
+		  <div class="col-sm-3">
+        <font color="black">
+        <select id="selectStatus">
+          <option value=" ">Attendance status</option>
+          <option value="Present">Present</option>
+          <option value="Absent">Absent</option>
+        </select>
+      </font>
+      </div>
+    </div>
+    
+    <div class="col-sm-3"></div>
+     <div class="col-sm-6">
+            
+      <button type="button" class="btn btn-default" name="submit" id="btn" onclick="insertAttendance()" > submit</button><br/>
+     </div>
+      <div class="col-sm-3"></div>
+
+    
+   	 </div>
+
+
+   </div>
+    <script src="js/jquery-1.12.0.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
+
+  </body>
+
+</html>

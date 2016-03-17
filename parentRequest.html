@@ -1,0 +1,131 @@
+
+<!Doctype html>
+<html>
+  <head>
+   <title></title>
+   <link rel="stylesheet" href="css/bootstrap.min.css">
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="style.css">
+  
+   <script type="text/javascript">
+    function sendRequest(u){
+
+                
+                var obj=$.ajax({url:u,async:false});
+                
+                var result=$.parseJSON(obj.responseText);
+                
+                return result;  
+                
+            }
+    function getId(thisId){
+    var id=window.location.search.substring(1);
+    //alert(id);
+    var variable=id.split("=");
+    //alert(variable);
+    var v2=variable[1].split("&");
+    //alert(v2[0]);
+  
+    //alert(thisId);
+}
+
+    function display(){
+      var id=window.location.search.substring(1);
+    //alert(id);
+      var variable=id.split("=");
+    //alert(variable);
+      var v2=variable[1].split("&");
+       alert(v2[0]);
+       var url="controller.php?cmd=21&id="+v2[0];
+       var display=sendRequest(url);
+       prompt("e",display);
+       
+
+       var table=document.getElementById("theTable");
+       var myrow=table.rows.length;
+       for(var count=1; count<display.message.length; count++){
+       var row=table.insertRow(myrow);
+       var cell1=row.insertCell(0);
+       var cell2=row.insertCell(1);
+       var cell3=row.insertCell(2);
+       var cell4=row.insertCell(3);
+       var cell5=row.insertCell(4);
+       var cell6=row.insertCell(5);
+
+       cell1.innerHTML=display.message[count].subject;
+       cell2.innerHTML=display.message[count].studentClass;
+       cell3.innerHTML=display.message[count].score;
+       cell4.innerHTML=display.message[count].outOf;
+       cell5.innerHTML=display.message[count].quizType;
+       cell6.innerHTML=display.message[count].teacherName;
+     }
+
+    } 
+
+            
+   </script>
+   
+  
+  </head>
+  
+   <nav class="navbar navbar-default" style="backgroud-color:#33ccff;" >
+      <div class="container-fluid">
+       <div class="navbar-header">
+        <a class="navbar-brand" href="#" color="white">E-class</a>
+       </div>
+      <ul class="nav navbar-nav">
+        <li class=""><a href="studentDashboard.html">Dashboard</a></li>
+        <li><a href="#">Page 1</a></li>
+        <li><a href="#">Page 2</a></li> 
+        <li><a href="#">Page 3</a></li>
+        
+      </ul>
+    </div>
+</nav>
+
+   
+    <body onload="display()">
+        
+
+
+   <div class="container">
+   <div class="jumbotron" style="backgroud-color:black;">
+
+      <div class="row">
+		  <div class="col-sm-2"></div>
+		  <div class="col-sm-8" style="backgroud-color:white" id="display">
+     
+        <table id ="theTable"  border="1" width='500'>
+              <th>Subject</th>
+              <th>Class</th>
+              <th>Score</th>
+              <th>Out Of</th>
+              <th>Quiz Type</th>
+              <th>Teacher</th>
+             
+
+
+        </table>
+
+
+       
+		  </div>
+		  <div class="col-sm-2"></div>
+    </div>
+    <div class="col-sm-3"></div>
+     <div class="col-sm-6">
+            <div id="add"></div>
+     </div>
+      <div class="col-sm-3"></div>
+
+    
+   	 </div>
+
+
+   </div>
+   <script src="js/jquery-1.12.0.min.js"></script>
+   <script src="js/bootstrap.min.js"></script>
+
+  </body>
+
+</html>
