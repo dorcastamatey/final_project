@@ -76,7 +76,7 @@ class e_class extends adb{
 		return $this->query();
 	}
 	function selectStudents($email){
-		$select="SELECT studentName,email,contact FROM students where teacherEmail='$email'";
+		$select="SELECT studentName,email,contact,StudentId FROM students where teacherEmail='$email'";
 		if(!$this->query($select)){
 			echo "cannot select";
 			
@@ -120,6 +120,15 @@ class e_class extends adb{
    	}
    	return $this->query($select);
    }
+
+   function selectStudentSubject($email){
+   	   $select="SELECT Course,grade FROM students WHERE email='$email'";
+   	   if(!$this->query($select)){
+   		echo "cannot select";
+   		echo mysql_error();
+   	}
+   	return $this->query($select);
+   }
    function selectQuestion(){
    	  $select="SELECT question,answer FROM questions";
    	  if(!$this->query($select)){
@@ -128,8 +137,8 @@ class e_class extends adb{
    	}
    	  return $this->fetch();
    }
-   function selectAnswers($qno){
-   	$select ="SELECT answer.answer, questions.question FROM  questions INNER JOIN answer ON answer.questionId=questions.questionId where answer.questionId = $qno";
+   function selectAnswers($id){
+   	$select ="SELECT answer From answer WHERE questionId='$id'";
    	  if(!$this->query($select)){
    		echo "cannot insert";
    		echo mysql_error();
@@ -176,14 +185,7 @@ class e_class extends adb{
 
   }
 
-   function studentCourses(){
-   	  $select="SELECT * FROM students";
-   	  if(!$this->query($select)){
-   		echo "cannot select";
-   		echo mysql_error();
-   	}
-   	  return $this->query($select);
-   }
+  
   function loginStudent($email,$password){
   	$login=" SELECT * FROM students  WHERE email='$email' AND password='$password'";
 return $this->query($login);
@@ -200,6 +202,21 @@ return $this->query($login);
   function chat($message,$sender,$recepient){
   	     $insert="INSERT INTO chat set message='$message',sender='$sender',recepient='$recepient'";
   	     return $this->query($insert);
+  }
+  function fetchChat(){
+  	$select="SELECT * FROM chat";
+  	return $this->query($select);
+  }
+  function quiz($subject,$class){
+  	$select="SELECT * FROM quizTable WHERE subject='$subject' AND theclass='$class'";
+  	return $this->query($select);
+  }
+
+  function selectQuestionsAndAnswers($teacherId,$subject,$quizNum){
+  	$select="SELECT questions.question,questions.answer,questions.questionId,
+  	 answer.answer FROM questions,answer WHERE questions.questionId=answer.questionId AND 
+  	questions.quizNum='$quizNum' AND questions.teacherId='$teacherId' AND questions.subject='$subject'";
+  	return $this->query($select);
   }
 }
 

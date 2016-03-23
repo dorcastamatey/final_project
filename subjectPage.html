@@ -26,7 +26,9 @@
 
       for(var count=1; count<num; count++){
         var course=display.message[count].Course;
-        displayQuestions.innerHTML=displayQuestions.innerHTML+course+"<br/>";
+        var grade=display.message[count].grade
+        //alert(grade);
+         displayQuestions.innerHTML=displayQuestions.innerHTML+'<a href="studentDashboard.html?course='+course+'&grade='+grade+'">'+course+'</a><br>';
 
       }
      }
@@ -43,10 +45,7 @@
        </div>
       <ul class="nav navbar-nav">
         <li class=""><a href="subjectPage.html">Dashboard</a></li>
-        <li><a href="">Send a message</a></li>
-        <li><a href=""> All students</a></li> 
-        <li><a href="#"> previous quiz</a></li>
-        <li><a href="#">Records</a></li>
+        
         
       </ul>
     </div>

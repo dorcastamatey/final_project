@@ -27,10 +27,10 @@
         var theList=document.getElementById("displayStudent");
         for(var count=1; count<num; count++ ){
           var students=display.message[count].studentName;
-          var studentId=display.message[count].StudentId;
+          var email=display.message[count].email;
           //alert(studentId);
 
-          theList.innerHTML=theList.innerHTML+'<a href="studentRecords.html?studId='+studentId+'&name='+students+'">'+students+'</a><br>';
+          theList.innerHTML=theList.innerHTML+'<a href="chatPage.html?email='+email+'&name='+students+'">'+students+'</a><br>';
 
         }
       } 
@@ -51,7 +51,6 @@
         <li><a href="quiz.html">Add Questions</a></li> 
         <li><a href="#">View Quiz</a></li>
         <li><a href="setQuiz.html">Set Quiz</a></li>
-        <li><a href="chat.html">Chat</a></li>
 
       </ul>
     </div>

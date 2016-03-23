@@ -57,7 +57,7 @@
  	viewChildren();
  	break;
  	case 18;
- 	viewCoursesAndMates();
+ 	selectStudentSubjects();
  	break;
  	case 19;
  	viewTeacher();
@@ -77,6 +77,16 @@
  	case 24;
  	chat();
  	break;
+ 	case 25;
+ 	insertChat();
+ 	break;
+ 	case 26;
+ 	selectQuiz();
+ 	break;
+ 	case 27;
+ 	displayQuizes();
+ 	break;
+ 	
 
  	default:
 		# code...
@@ -264,7 +274,7 @@ function selectAttendance(){
  			{
  				echo json_encode($row);
 
- 				$row = $obj->fetch (); 
+ 				$row = $obj->fetch(); 
  				if ($row){
  					echo ",";
  				}
@@ -341,16 +351,16 @@ function selectAttendance(){
  		include("function.php");
  		$obj=new e_class();
 
- 		$qno = $_REQUEST["ques"];
+ 		$id = $_REQUEST["id"];
 
- 		if ($row=$obj->selectAnswers($qno))
+ 		if ($row=$obj->selectAnswers($id))
  		{
  			echo '{"result":1, "message":[';
  			while ($row)
  			{
  				echo json_encode($row);
 
- 				$row = $obj->fetch (); 
+ 				$row = $obj->fetch(); 
  				if ($row){
  					echo ",";
  				}
@@ -479,7 +489,7 @@ function selectAttendance(){
  			{
  				echo json_encode($row);
 
- 				$row = $obj->fetch (); 
+ 				$row = $obj->fetch(); 
  				if ($row){
  					echo ",";
  				}
@@ -573,34 +583,6 @@ function selectAttendance(){
  		}
  	}
 
- 	function viewCoursesAndMates(){
-
- 		include("function.php");
- 		$obj=new e_class();
-
-		  //$qno = $_REQUEST["ques"];
-
- 		if ($row=$obj->studentCourses())
- 		{
- 			echo '{"result":1, "message":[';
- 			while ($row)
- 			{
- 				echo json_encode($row);
-
- 				$row = $obj->fetch (); 
- 				if ($row){
- 					echo ",";
- 				}
- 			}
- 			echo "]}";
- 			echo mysql_error();
- 			return;
- 		}
- 		else{
- 			echo '{"result":0, "message":"not display"}';
- 			return;
- 		}
- 	}
 
  	function selectStudents(){
 
@@ -629,6 +611,24 @@ function selectAttendance(){
 
 
  	}
+ 	function insertChat(){
+     $senderEmail=$_SESSION['emailUser'];
+     $recepientEmail=$_REQUEST['recepient'];
+     $message=$_REQUEST['message'];
+     if(!$obj->chat($message,$senderEmail,$recepientEmail)){
+ 			echo mysql_error();
+
+ 			echo '{"result": 0, "message": "message was not added"}';
+ 			return;
+
+ 		}
+ 		echo '{"result": 1, "message": "message was added successfully"}';
+
+ 		return;
+
+
+
+ 	}
     function chat(){
 
  		include("function.php");
@@ -636,7 +636,7 @@ function selectAttendance(){
 
 		 //$email=$_SESSION['emailUser'];
 
- 		if ($row=$obj->chat())
+ 		if ($row=$obj->FetchChat())
  		{
  			echo '{"result":1, "message":[';
  			while ($row)
@@ -656,6 +656,101 @@ function selectAttendance(){
 
 
  	}
+ 	function selectStudentSubjects(){
+ 		include("function.php");
+ 		$obj=new e_class();
+
+		 $email=$_SESSION['emailStudent'];
+
+ 		if ($row=$obj->selectStudentSubject($email))
+ 		{
+ 			echo '{"result":1, "message":[';
+ 			while ($row)
+ 			{
+ 				echo json_encode($row);
+
+ 				$row = $obj->fetch (); 
+ 				if ($row){
+ 					echo ",";
+ 				}
+ 			}
+ 			echo "]}";
+ 		}
+ 		else{
+ 			echo '{"result":0, "message":"not display"}';
+ 		}
+
+
+ 	}
+
+ 	
+ 	function selectQuiz(){
+ 		 include("function.php");
+ 		$obj=new e_class();
+
+ 		$course=$_REQUEST['course'];
+ 		$grade=$_REQUEST['grade'];
+
+ 		if ($row=$obj->quiz($course,$grade))
+ 		{
+ 			echo '{"result":1, "message":[';
+ 			while ($row)
+ 			{
+ 				echo json_encode($row);
+
+ 				$row = $obj->fetch (); 
+ 				if ($row){
+ 					echo ",";
+ 				}
+ 			}
+ 			echo "]}";
+ 		}
+ 		else{
+ 			echo '{"result":0, "message":" cannot display result"}';
+ 		}
+
+
+ 	}
+
+ 	function displayQuizes(){
+ 		include("function.php");
+ 		$obj=new e_class();
+
+		 
+         $course=$_REQUEST['course'];
+         $teacherId=$_REQUEST['teacherId'];
+         $quiz=$_REQUEST['quiz'];
+ 		if ($row=$obj->selectQuestionsAndAnswers($teacherId,$course,$quiz))
+ 		{
+ 			echo '{"result":1, "message":[';
+ 			while ($row)
+ 			{
+ 				echo json_encode($row);
+
+ 				$row = $obj->fetch (); 
+ 				if ($row){
+ 					echo ",";
+ 				}
+ 			}
+ 			echo "]}";
+ 		}
+ 		else{
+ 			echo '{"result":0, "message":"not display"}';
+ 			echo mysql_error();
+ 		}
+
+
+ 	}
+
+
+ 	
+
+
+
+
+ 	
+
+ 	
 
 
 

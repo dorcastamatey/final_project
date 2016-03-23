@@ -7,12 +7,48 @@
    <link rel="stylesheet" href="style.css">
   
    <script type="text/javascript">
+      function sendRequest(u){
+
+                
+                var obj=$.ajax({url:u,async:false});
+                
+                var result=$.parseJSON(obj.responseText);
+                
+                return result;  
+                
+            }
+      function selectQuiz(){
+
+        var id=window.location.search.substring(1);
+        //alert(id);
+    
+      var variable=id.split("=");
+    
+      var v2=variable[1].split("&");
+       
+       var url="controller.php?cmd=26&course="+v2[0]+"&grade="+variable[2];
+       //alert(variable[2]);
+       var display =sendRequest(url);
+       //alert("hey");
+
+       var displayCourse=document.getElementById("display");
+       for(var count=1; count<display.message.length;count++){
+            var comment=display.message[count].comment;
+            var course=display.message[count].subject;
+            var tid=display.message[count].teacherId;
+            var quizNum=display.message[count].quizNum;
+            displayCourse.innerHTML=displayCourse.innerHTML+'<a href="quizPage.html?course='+course+'&tid='+tid+'&quizNum='+quizNum+
+            '">'+comment+'</a><br>';
+       }
+
+      }
+    
     
    </script>
    
   
   </head>
-  <body>
+  <body onload="selectQuiz()">
    <nav class="navbar navbar-default" style="backgroud-color:#33ccff;" >
       <div class="container-fluid">
        <div class="navbar-header">
@@ -44,7 +80,7 @@
 		  <div class="col-sm-6" style="backgroud-color:white" id="display">
         <div class="page-header"><h4>Activity</h4></div>
 
-       <p><h5><a href="quizPage.html"> Quiz one is due in three days</a><h5></p>
+       
 		  </div>
 		  <div class="col-sm-3">
        <div class="page-header"><h5>History and Notifications</h5></div>

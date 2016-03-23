@@ -24,8 +24,10 @@
     var choices;
     var quesNum=0;
     var correct=0;
+    var countId=1;
     var yourAns=new Array();
-
+    var queArray=new Array();
+    var idArray=new Array();
 
 function grade(){
 
@@ -33,7 +35,7 @@ function grade(){
     //prompt("w",url);
      var display =sendRequest(url);
      quesNum=display.message.length;
-     alert(quesNum);
+     //alert(quesNum);
      //number of questions
      for(var ans=0;ans<quesNum;ans++){ 
 
@@ -75,24 +77,46 @@ function display(){
   }
 }
   function getQnA(){
-          var url="controller.php?cmd=9&ques="+Qno;
+             grade();
 
+           var id=window.location.search.substring(1);
+        //alert(id);
+    
+           var variable=id.split("=");
+    
+          var v2=variable[1].split("&");
+          var v3=variable[2].split("&");
+       
+          var url="controller.php?cmd=27&course="+v2[0]+"&teacherId="+v3[0]+"&quiz="+variable[3];
            var display =sendRequest(url);
+           var displayLength=display.message.length;
+            for(var list=0;list<displayLength;list++){
+           var quesCount=display.message[list].questionId;
+            idArray[quesCount]=display.message[list].questionId;
 
-           num=display.message.length;//
-           alert(num);
+           queArray[quesCount]=display.message[list].question;
+         }
 
-          var queston = display.message[0].question;
+         
+         var id=idArray[countId];
+         var url2="controller.php?cmd=9&id="+id;
+         var display1=sendRequest(url2);
+         prompt("w", url2);
+         var ansLength=display1.message.length;
+         var queston=queArray[countId];
+
           var  displayQuestions=document.getElementById("quiz");
           displayQuestions.innerHTML=displayQuestions.innerHTML=queston;
 
+         for(var countAns=0; countAns< ansLength;countAns++){
+              //alert(ansLength);
+               var ans=display1.message[countAns].answer;
+               
+              displayQuestions.innerHTML=displayQuestions.innerHTML+'<div class="radio"> <label><input type="radio"  name="multiple" value="'+ans+'">'+ans+'</label></div>';        
+            
 
-           for(var i=1; i<num; i++){
-            if(display.message[i].question == queston){
-              //console.log(display.message[i].answer);
-              displayQuestions.innerHTML=displayQuestions.innerHTML+'<div class="radio"> <label><input type="radio"  name="multiple" value="'+display.message[i].answer+'">'+display.message[i].answer+'</label></div>';        
-            }
-          }
+
+         }
 
           displayQuestions.innerHTML=displayQuestions.innerHTML+'<button type="button" class="btn btn-default" name="submit" onclick="quizAnswer()"> submit</button>';
           document.getElementById("status").innerHTML="Question "+(pos+1)+ " of " +quesNum;
@@ -121,6 +145,7 @@ function display(){
              pos++;
              Qno++;
              count++;
+             countId++;
              display();
             //setTimer();
           }

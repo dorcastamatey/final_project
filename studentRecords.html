@@ -18,18 +18,27 @@
                 return result;  
                 
             }
-    
+    function getId(thisId){
+    var id=window.location.search.substring(1);
+    //alert(id);
+    var variable=id.split("=");
+    //alert(variable);
+    var v2=variable[1].split("&");
+    //alert(v2[0]);
+  
+    //alert(thisId);
+}
 
     function display(){
       var id=window.location.search.substring(1);
-    
+    //alert(id);
       var variable=id.split("=");
-    
+    //alert(variable);
       var v2=variable[1].split("&");
-       
+       //alert(v2[0]);
        var url="controller.php?cmd=21&id="+v2[0];
        var display=sendRequest(url);
-      
+       //prompt("e",display);
        
 
        var table=document.getElementById("theTable");

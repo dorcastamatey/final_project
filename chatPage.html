@@ -18,19 +18,29 @@
                 return result;  
                 
             }
-      function viewStudent(){
+      function chat(){
+        var id=window.location.search.substring(1);
+    
+        var variable=id.split("=");
+    
+        var v2=variable[1].split("&");
 
-        var view="controller.php?cmd=23";
-        var display=sendRequest(view);
-        var num =display.message.length;
-        //alert(display.message[0].childsName);
+        var message=$("#chat").val();
+
+        var insert="controller.php?cmd=25&message="+message+"&recepient="+v2[0];
+        var display=sendRequest(insert);
+        var fetch="controller.php?cmd=24";
+        var display=sendRequest(fetch);
+        var num=display.length;
+        
         var theList=document.getElementById("displayStudent");
         for(var count=1; count<num; count++ ){
-          var students=display.message[count].studentName;
-          var studentId=display.message[count].StudentId;
-          //alert(studentId);
+          var messages=display.message[count].message;
+          var sender=display.message[count].sender;
+          var recepient=display.message[count].recepient;
+          
 
-          theList.innerHTML=theList.innerHTML+'<a href="studentRecords.html?studId='+studentId+'&name='+students+'">'+students+'</a><br>';
+          theList.innerHTML=theList.innerHTML+ messages;
 
         }
       } 
@@ -46,12 +56,11 @@
         <a class="navbar-brand" href="#" color="white">E-class</a>
        </div>
       <ul class="nav navbar-nav">
-        <li class=""><a href="#">Dashboard</a></li>
-        <li><a href="student.html">Add students</a></li>
-        <li><a href="quiz.html">Add Questions</a></li> 
-        <li><a href="#">View Quiz</a></li>
-        <li><a href="setQuiz.html">Set Quiz</a></li>
-        <li><a href="chat.html">Chat</a></li>
+        <li class=""><a href="#"></a>Chat</li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li> 
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
 
       </ul>
     </div>
@@ -62,21 +71,19 @@
 
       <div class="row">
 		  <div class="col-sm-3">
-        <div class="page-header"><h4>Students</h4></div>
-       <p id="displayStudent">
-
-       </p>
+        
        
 
       </div>
 		  <div class="col-sm-6" style="backgroud-color:white" id="display">
-        <div class="page-header"><h4>Time table</h4></div>
+        <div class="page-header"><h4>Chat</h4></div>
+         <textarea type="text" name="chat" id="chat" cols="50"></textarea><br/>
+         <button >Submit</button>
+
        
 		  </div>
 		  <div class="col-sm-3">
-       <div class="page-header"><h5>History and Notifications</h5></div>
-        <p><h5> you set a quiz two days ago<h5></p>
-         <p><h5> Mrs Akoto sent you a message<h5></p>
+       
 
       </div>
     </div>
